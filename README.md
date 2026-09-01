@@ -5,7 +5,7 @@
 [![Status: historical software](https://img.shields.io/badge/status-historical%20software-6b7280)](#project-status)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-ATSimu (originally **A Traffic Simulation**, or **ATS**) is a microscopic traffic simulation package created by [Zhengbing He](https://www.gotrafficgo.com). It was developed in Visual C++ between 2010 and 2011 and is preserved here as an early open-source research software project.
+ATSimu (originally **A Traffic Simulation**, or **ATS**) is a microscopic traffic simulation package created by [Zhengbing He](https://www.gotrafficgo.com). It was developed in Visual C++ between 2006 and 2011 and is preserved here as an early open-source research software project.
 
 ![Sample ATSimu road network](src/Samples/Design%20files/Sample%2820100626%20Network%29.jpg)
 
