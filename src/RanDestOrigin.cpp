@@ -14,7 +14,7 @@ CRanDestOrigin::~CRanDestOrigin(void)
 }
 
 
-Struct_Shortest_Path * CRanDestOrigin::Get_Veh_SPI()
+Struct_Shortest_Path * CRanDestOrigin::Get_Veh_SPI(char Type)  //'T': tsp, 'D': dsp
 {
 	int End_Link_ID;
 	int i=0;
@@ -27,7 +27,7 @@ Struct_Shortest_Path * CRanDestOrigin::Get_Veh_SPI()
 			return NULL;
 
 		//End_Link_ID=99;   //0505
-		spi= Get_Shortest_Path(Located_Link_ID,End_Link_ID);
+		spi= Get_Shortest_Path('D', Located_Link_ID,End_Link_ID);
 
 		///////////////////////////////////////////
 		if(Long_Time_Iteration(&i))

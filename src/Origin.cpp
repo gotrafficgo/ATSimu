@@ -3,6 +3,7 @@
 #include "Global.h"
 #include "Veh.h"
 #include <math.h>
+#include "Traveler.h"
 
 COrigin::COrigin(int Located_Link_ID, int Located_Cell_ID, int Demand)
 {
@@ -10,6 +11,13 @@ COrigin::COrigin(int Located_Link_ID, int Located_Cell_ID, int Demand)
 	this->Located_Cell_ID=Located_Cell_ID;
 	this->Demand= Demand;
 	this->Time_To_Generate_Veh=0;
+    End_Link_ID=-1;
+
+	extern int G_Commuter_Number_Per_Origin;
+	Commuter_Number=G_Commuter_Number_Per_Origin;
+
+	for (int i=0; i<MAX_COMMUTER_NUMBER_PER_ORIGIN; i++)
+		Commuter_Array[i]=NULL;
 }
 
 COrigin::~COrigin(void)
@@ -33,7 +41,7 @@ int COrigin::Get_Load_Lane_ID()
 		while (i<10)
 		{
 			Load_Lane_ID= Get_Random_Number(0, Sum_Of_Lane - 1);      //random line, between 0-(Sum_Of_Line-1)
-			if(false==Lane_Array[Located_Link_ID][Load_Lane_ID] ->Lane_Cell[Located_Cell_ID]->IsVehInCell())
+			if(false==Link_Array[Located_Link_ID]->Lanes[Load_Lane_ID] ->Lane_Cell[Located_Cell_ID]->IsVehInCell())
 				break;
 			else
 				i++;
@@ -55,21 +63,27 @@ void COrigin::Produce_Veh()
 	int Load_Lane_ID= Get_Load_Lane_ID();
 	if (Load_Lane_ID==-1)
 		return;
-	
+
 	bool Able_Flag = Have_Space_In_Target_Lane(this->Located_Link_ID, Load_Lane_ID, this->Located_Cell_ID);
 	if (Able_Flag)
 	{
 		extern int Total_Veh_Number;
-
-		Struct_Shortest_Path * spi= Get_Veh_SPI();
+		Struct_Shortest_Path* spi= Get_Veh_SPI('D'); //shortest path is just for making sure there are routes between OD
 		int End_Link_ID= spi->End_Link_ID;
 		int Veh_Type= Get_Veh_Type();
-		CVeh *p = new CVeh(Total_Veh_Number, Veh_Type, Located_Cell_ID, Located_Link_ID, End_Link_ID,spi);
-		Lane_Array[Located_Link_ID][Load_Lane_ID] ->Lane_Cell[Located_Cell_ID]->PutVehInCell(p);
+		
+		//CTraveler *pTraveler= new CTraveler(Traveler_Number_On_Network, Located_Link_ID, End_Link_ID, spi);
+		CTraveler *pTraveler= new CTraveler(Traveler_Number_On_Network, Located_Link_ID, End_Link_ID);
+		CVeh *p = new CVeh(Traveler_Number_On_Network, Veh_Type, Located_Cell_ID, pTraveler);
+		
+		Link_Array[Located_Link_ID]->Lanes[Load_Lane_ID] ->Lane_Cell[Located_Cell_ID]->PutVehInCell(p);
+		Traveler_Number_On_Network++;
 		Total_Veh_Number++;
+		pSampleCollection->One_Depart('T');
 	}
-
 }
+
+
 
 int COrigin::Get_Veh_Type()
 {
@@ -150,8 +164,8 @@ int COrigin::Get_Current_Demand()
 
 	for (int i=0; i<G_Demand_Number-1;i++)
 	{
-		xa=int(3600*Demand_Array[i][0]);      //time in Demand_Array[i][0] is in hour
-		xb=int(3600*Demand_Array[i+1][0]);
+		xa=int(G_Day_Length*(Demand_Array[i][0]));      //time in Demand_Array[i][0] is in day
+		xb=int(G_Day_Length*Demand_Array[i+1][0]);
 		ya=int(TIMES* Demand_Array[i][1]);   //the unit of demand is veh/min
 		yb=int(TIMES* Demand_Array[i+1][1]);
 
@@ -184,7 +198,7 @@ int COrigin::Get_Current_Demand()
 
 
 
-Struct_Shortest_Path* COrigin::Get_Veh_SPI()
+Struct_Shortest_Path* COrigin::Get_Veh_SPI(char Type)  //'T': tsp, 'D': dsp
 {
 	return NULL;
 }

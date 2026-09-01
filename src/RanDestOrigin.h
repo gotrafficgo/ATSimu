@@ -8,5 +8,5 @@ public:
 	~CRanDestOrigin(void);
 
 	int Get_Random_End_Link();
-	Struct_Shortest_Path * Get_Veh_SPI();
+	Struct_Shortest_Path * Get_Veh_SPI(char Type);  //'T': tsp, 'D': dsp
 };

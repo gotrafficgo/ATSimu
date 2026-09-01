@@ -23,6 +23,8 @@
 #define IDD_DLG_SETTING                 155
 #define IDD_PLOT_TRAJECTORY             156
 #define IDD_CAR_MOVING_MODEL            157
+#define IDD_DIALOG2                     158
+#define IDD_SET_DAY_TO_DAY              158
 #define IDC_EDIT1                       1000
 #define IDC_SIMU_TIME                   1000
 #define IDC_SHOW_CONTROL                1000
@@ -43,13 +45,21 @@
 #define IDC_SECOND                      1003
 #define IDC_EDIT3                       1004
 #define IDC_RECEIVE_GUIDANCE_NUMBER     1004
+#define IDC_DAY                         1004
 #define IDC_EDIT4                       1005
+#define IDC_DAY_TIME                    1005
 #define IDC_EDIT5                       1006
+#define IDC_TRAVELER_NUMBER             1006
 #define IDC_EDIT6                       1007
+#define IDC_COMMUTER_NUMBER             1007
 #define IDC_EDIT7                       1008
+#define IDC_DAY_LENGTH                  1008
 #define IDC_EDIT8                       1009
+#define IDC_ARRIVAL_TIME                1009
 #define IDC_EDIT9                       1010
+#define IDC_COMMUTER_TYPE               1010
 #define IDC_EDIT10                      1011
+#define IDC_DAY_NUMBER                  1011
 #define IDC_EDIT11                      1012
 #define IDC_EDIT12                      1013
 #define IDC_EDIT13                      1014
@@ -106,6 +116,8 @@
 #define IDC_RADIO_CA                    1089
 #define IDC_RADIO_CF                    1090
 #define IDC_CHECK_SLIDER_DEMAND         1091
+#define IDC_SHUT_DOWN                   1093
+#define IDC_CHECK1                      1094
 #define ID_START                        32771
 #define ID_ZOOMIN                       32774
 #define ID_BUTTON32775                  32775
@@ -166,15 +178,18 @@
 #define ID_SETTING                      32858
 #define ID_PLOT_TRAJECTORY              32861
 #define ID_CAR_MOVING_MODEL             32862
+#define ID_BUTTON32863                  32863
+#define ID_CONFLICT                     32863
+#define ID_SET_DAY_TO_DAY               32864
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        158
-#define _APS_NEXT_COMMAND_VALUE         32863
-#define _APS_NEXT_CONTROL_VALUE         1092
+#define _APS_NEXT_RESOURCE_VALUE        159
+#define _APS_NEXT_COMMAND_VALUE         32865
+#define _APS_NEXT_CONTROL_VALUE         1095
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

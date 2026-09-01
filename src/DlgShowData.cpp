@@ -14,6 +14,10 @@
 CDlgShowData::CDlgShowData(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgShowData::IDD, pParent)
 	, m_simu_time_2(_T(""))
+	, m_day(0)
+	, m_day_time(0)
+	, m_traveler_number(0)
+	, m_commuter_number(0)
 {
 	//{{AFX_DATA_INIT(CDlgShowData)
 	m_simu_time = 0;
@@ -33,7 +37,11 @@ void CDlgShowData::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TOTAL_VEH_NUMBER, m_total_veh_number);
 	DDX_Text(pDX, IDC_SIMU_TIME_2, m_simu_time_2);
 	//}}AFX_DATA_MAP
-	
+
+	DDX_Text(pDX, IDC_DAY, m_day);
+	DDX_Text(pDX, IDC_DAY_TIME, m_day_time);
+	DDX_Text(pDX, IDC_TRAVELER_NUMBER, m_traveler_number);
+	DDX_Text(pDX, IDC_COMMUTER_NUMBER, m_commuter_number);
 }
 
 
@@ -69,6 +77,10 @@ void CDlgShowData::RefreshData()
 	extern int Total_Veh_Number;
 	extern int Out_Veh_Number;
 	extern char Current_Control_Type;
+	extern int Traveler_Number_On_Network;
+	extern int Commuter_Number_On_Network;
+	extern int current_day;
+	extern int time_in_current_day;
 
 	/////////////////////////////
 	extern int simu_time;
@@ -77,6 +89,11 @@ void CDlgShowData::RefreshData()
 	m_simu_time_2=ConvertTime(simu_time+Start_Simu_Time);
 	m_total_veh_number= Total_Veh_Number;
 	m_veh_number= Total_Veh_Number- Out_Veh_Number;
+
+	m_day= current_day;
+	m_day_time= time_in_current_day;
+	m_traveler_number= Traveler_Number_On_Network;
+	m_commuter_number= Commuter_Number_On_Network;
 
 	SendMessage(WM_UPDATEDATA, FALSE);
 }

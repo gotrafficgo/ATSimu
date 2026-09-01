@@ -5,19 +5,23 @@
 #include "MainFrm.h"
 #include "setting.h"
 
-
 CMarginalPoint *MarginalPoint_Array[MAX_MARGINALPOINT_NUMBER];	
 CCross *Cross_Array[MAX_CROSS_NUMBER];
 CLink *Link_Array[MAX_LINK_NUMBER];	
-CMyObject *Node_Relation[MAX_MARGINALPOINT_NUMBER+MAX_CROSS_NUMBER][MAX_MARGINALPOINT_NUMBER+MAX_CROSS_NUMBER];
-CLane *Lane_Array[MAX_LINK_NUMBER][MAX_LANE_NUMBER];	
+CLink *Node_Relation[MAX_MARGINALPOINT_NUMBER+MAX_CROSS_NUMBER][MAX_MARGINALPOINT_NUMBER+MAX_CROSS_NUMBER];
+int Network_Structure[MAX_MARGINALPOINT_NUMBER+MAX_CROSS_NUMBER][MAX_MARGINALPOINT_NUMBER+MAX_CROSS_NUMBER];
 CCross_Lane  *Cross_Lane_Array[MAX_CROSS_NUMBER][MAX_CROSS_LANE_NUMBER];
 CConflict_Area *Conflict_Area_Array[MAX_CROSS_NUMBER][MAX_CONFLICT_AREA_NUMBER]; 
-Struct_Shortest_Path *Shortest_Path_Array[MAX_LINK_NUMBER][MAX_LINK_NUMBER];
 Struct_FixedOD FixedOD_Array[MAX_FixedOD_NUMBER]; 
 double Demand_Array[MAX_DEMAND_NUMBER][2];      //original demand which includes the lower and upper value; value in demand_array is veh #/min generated.
 
+Struct_Shortest_Path *Distance_Shortest_Path_Array[MAX_LINK_NUMBER][MAX_LINK_NUMBER];
+Struct_Shortest_Path *Time_Shortest_Path_Array[MAX_LINK_NUMBER][MAX_LINK_NUMBER];
+
 int simu_time;   
+int current_day;
+int time_in_current_day;
+
 int Received_Guidance_Number=0;
 double zoom_ratio=1-3/7;
 CSize m_sizeEllipse;  
@@ -32,14 +36,14 @@ int G_Lane_Number=0;
 int G_FixedOD_Number=0;
 int G_Demand_Number=0;
 bool Yellow_Intersection=true;
+bool Conflict_Flag=true;
 char Car_Following_Model_Type='G';   //'G'-Gipps; 'N'-Newell; 'I'-IDM
 int Start_Time_Guidance=0;
 bool Switch_Guidance=false;
 bool Display_Flag=true;
 bool Switch_Thread= true;	
 int Start_Simu_Time=0;
-char Current_Control_Type='N';
-int Total_Simulation_Time=3600;
+char Current_Control_Type='P';     //search "abc" for setting initial light state. for yellow at the beginning: 'N'
 
 int Current_Demand=0;
 int Current_Slider_Demand=15;  //mean of Binomial distribution is n*p, so 0.2 means the mean is generating 2 vehs in 10 sec
@@ -65,7 +69,6 @@ int Max_Lane_Cell_Number;
 int Meter_Per_Cell;
 int Pixel_Per_Cell;
 
-
 //the unit is veh
 //Yellow_Intersection related variable. 
 //Before entering intersections, vehcles estimate the veh number in the Checking_Region of the target lane of next link. 
@@ -73,6 +76,30 @@ int Pixel_Per_Cell;
 //the value of Entering_Boundry is from ENTERING_BOUNDRY_A and ENTERING_BOUNDRY_F respectively corresponding to CA model and CF model
 int Entering_Boundry;    //see above comments
 int Checking_Region;    //if in the "CHECKING_REGION", which begin from the beginning of link
+
+bool Output_RouteChoice=true;
+bool Output_MFD=true;
+bool Output_DepartureArrivalRate= true;
+bool Output_SpatialDistribution=true;
+bool Output_Trajectory=false;
+bool Output_DetectorData=false;
+
+bool Shudown_After_Program_End=false;
+
+int Commuter_Number_On_Network=0;
+int Traveler_Number_On_Network=0;
+
+int G_Simulated_Day_Number=20;
+int G_Commuter_Number_Per_Origin=60;
+int G_Day_Length=4000;    //duration of a day
+int G_Required_Arrival_Time=2000;
+int Total_Simulation_Time=0;
+int All_Commuters_Type=2;  //1,2,3,4,5,6
+int Waiting_Time_In_Intersections= (1+100/2)/2;   //it is only temperal, in current sample network, all cycle times are 90, and 4 phases 
+int Waiting_Cycle_Number=0;
+
+
+
 
 
 double Point_Distance(Cpoint a1, Cpoint a2)
@@ -289,6 +316,26 @@ double Get_New_Mean(double Average, int Sum_without_This_Value, double Value)
 	return theAverage;
 }
 
+
+
+Struct_Shortest_Path * Get_Shortest_Path(char Type, int Start_Link_ID, int End_Link_ID)
+{
+	Struct_Shortest_Path *spi;
+	extern CSimuFun *simuFun;
+	CMainFrame *pMainFrame= (CMainFrame *)AfxGetApp()->m_pMainWnd;   
+
+//	if(Type=='T' && simuFun->Information_Ready==true && pMainFrame->Show_Time_Shortest_Path==true)     //information has been ready &&time sp is chosen
+	if(Type=='T' && pMainFrame->Show_Time_Shortest_Path==true)     //information has been ready &&time sp is chosen
+		spi= Shortest_Path('T', Start_Link_ID, End_Link_ID);
+	else
+		spi = Distance_Shortest_Path_Array[Start_Link_ID][End_Link_ID];
+	
+	return spi;
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Type: P
 Struct_Shortest_Path* Shortest_Path(char Type, int Start_Link_ID, int End_Link_ID)
 {
@@ -302,38 +349,42 @@ Struct_Shortest_Path* Shortest_Path(char Type, int Start_Link_ID, int End_Link_I
 	int path[MAX_ROUTE_LENGTH];
 	int way[MAX_ROUTE_LENGTH];
 	int way_1[MAX_ROUTE_LENGTH];    //length of Shortest_Path
-	int Link_ID;
 	int temp;
 	int Start_Point = Link_Array[Start_Link_ID]->End_Object->Object_ID;
 	int End_Point = Link_Array[End_Link_ID]->Start_Object->Object_ID;
+
+	/////////////////////////////////////////////////////////
 	for(i=0; i<MAX_ROUTE_LENGTH; i++)
 	{
 		way[i]=-1;
 		way_1[i]=-1;
 	}
+	
+	////////////////////////////////////////////////////////
 	for(i=0; i<MAX_ROUTE_LENGTH; i++)
 	{
 		if(Node_Relation[Start_Point][i] == NULL)
 			dist[i] = Max_Number;
 		else
 		{
-			Link_ID = Node_Relation[Start_Point][i]->Object_ID;
 			switch (Type)
 			{
-			case 'D':
-				dist[i] = Lane_Array[Link_ID][0]->Cell_Number;
+			case 'D':	
+				dist[i] = Node_Relation[Start_Point][i]->Length_In_FFTT;
 				break;
 			case 'T':
-				dist[i]= Link_Array[Link_ID]->Current_On_Link_Time;
+				dist[i]= Node_Relation[Start_Point][i]->Current_On_Link_Time;
 				break;
 			}			
 		}
+
 		s[i]= 0;
 		if(i!=Start_Point && dist[i]< Max_Number)
 			path[i]=Start_Point;
 		else
 			path[i]=-1;
 	}
+	
 	s[Start_Point]=1;
 	for(i=0; i<MAX_ROUTE_LENGTH-1; i++)
 	{
@@ -353,14 +404,13 @@ Struct_Shortest_Path* Shortest_Path(char Type, int Start_Link_ID, int End_Link_I
 					temp = Max_Number;
 				else
 				{
-					Link_ID = Node_Relation[u][w]->Object_ID;
 					switch (Type)
 					{
 					case 'D':
-						temp = Lane_Array[Link_ID][0]->Cell_Number;
+						temp = Node_Relation[u][w]->Length_In_FFTT;
 						break;
 					case 'T':
-						temp= Link_Array[Link_ID]->Current_On_Link_Time;
+						temp= Node_Relation[u][w]->Current_On_Link_Time;
 						break;
 					}
 				}
@@ -402,7 +452,7 @@ Struct_Shortest_Path* Shortest_Path(char Type, int Start_Link_ID, int End_Link_I
 	way_1[temp_vector]=End_Link_ID;
 
 	Struct_Shortest_Path* spi=new Struct_Shortest_Path;
-	spi->Shortest_Path_Dist =dist[End_Point];
+	spi->Travel_Time_On_Shortest_Path =dist[End_Point];
 	for (int i=0; i<MAX_ROUTE_LENGTH; i++)
 		spi->Shortest_Path[i]= way_1[i];
 
@@ -431,19 +481,141 @@ Struct_Shortest_Path* Shortest_Path(char Type, int Start_Link_ID, int End_Link_I
 }
 
 
-Struct_Shortest_Path * Get_Shortest_Path(int Start_Link_ID, int End_Link_ID)
-{
-	Struct_Shortest_Path *spi;
-	extern CSimuFun *simuFun;
-	CMainFrame *pMainFrame= (CMainFrame *)AfxGetApp()->m_pMainWnd;   
 
-	if(simuFun->Information_Ready==true && pMainFrame->Show_Time_Shortest_Path==true)     //information has been ready &&time sp is chosen
-		spi= Shortest_Path('T', Start_Link_ID, End_Link_ID);
-	else
-		spi = Shortest_Path_Array[Start_Link_ID][End_Link_ID];
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Struct_Shortest_Path* Get_Shortest_Path(int Travel_Time_On_Links[], int Start_Link_ID, int End_Link_ID)
+{
+	int Max_Number=100000000;
+	int min;
+	int u;
+	int i;
+	int j;
+	int dist[MAX_ROUTE_LENGTH];
+	int s[MAX_ROUTE_LENGTH];
+	int path[MAX_ROUTE_LENGTH];
+	int way[MAX_ROUTE_LENGTH];
+	int way_1[MAX_ROUTE_LENGTH];    //length of Shortest_Path
+	int Link_ID;
+	int temp;
+	int Start_Point = Link_Array[Start_Link_ID]->End_Object->Object_ID;
+	int End_Point = Link_Array[End_Link_ID]->Start_Object->Object_ID;
+
+	/////////////////////////////////////////////////////////
+	for(i=0; i<MAX_ROUTE_LENGTH; i++)
+	{
+		way[i]=-1;
+		way_1[i]=-1;
+	}
 	
+	////////////////////////////////////////////////////////
+	for(i=0; i<MAX_ROUTE_LENGTH; i++)
+	{
+		if(Node_Relation[Start_Point][i] == NULL)
+			dist[i] = Max_Number;
+		else
+		{
+			Link_ID = Node_Relation[Start_Point][i]->Object_ID;
+			dist[i]= Travel_Time_On_Links[Link_ID];
+		}
+
+		s[i]= 0;
+		if(i!=Start_Point && dist[i]< Max_Number)
+			path[i]=Start_Point;
+		else
+			path[i]=-1;
+	}
+	
+	s[Start_Point]=1;
+	for(i=0; i<MAX_ROUTE_LENGTH-1; i++)
+	{
+		min =Max_Number;
+		u=Start_Point;
+		for(j=0; j<MAX_ROUTE_LENGTH; j++)
+			if(!s[j] && dist[j]<min)
+			{
+				u=j;
+				min=dist[j];
+			}
+			s[u]=1;
+			for(int w=0; w<MAX_ROUTE_LENGTH; w++)
+			{
+				/////////////////added
+				if(Node_Relation[u][w] == NULL)
+					temp = Max_Number;
+				else
+				{
+					Link_ID = Node_Relation[u][w]->Object_ID;
+					temp= Travel_Time_On_Links[Link_ID];
+				}
+				///////////////////added end
+
+				if(!s[w] && dist[u]+temp<dist[w])
+				{
+					dist[w]= dist[u]+temp;
+					path[w]= u;
+				}			
+			}
+	}
+	way[0]= End_Point;
+	int k=End_Point;
+	
+	for(j=1; j<MAX_ROUTE_LENGTH; j++)
+		if(k>=0)  
+		{
+			way[j]=path[k];   
+			k=way[j];   
+		}
+
+	//////////added
+	int temp_Link;
+	int temp_vector=0;
+	way_1[temp_vector]=Start_Link_ID;
+	temp_vector++;
+	for(i=1;i<MAX_ROUTE_LENGTH;i++)
+	{
+		if(way[i]!=-1)
+		{
+			temp_Link = Node_Relation[way[i]][way[i-1]]->Object_ID;
+			way_1[temp_vector] = temp_Link;
+			temp_vector++;
+		}
+		else
+			break;
+	}
+	way_1[temp_vector]=End_Link_ID;
+
+	Struct_Shortest_Path* spi=new Struct_Shortest_Path;
+	spi->Travel_Time_On_Shortest_Path =dist[End_Point];
+	for (int i=0; i<MAX_ROUTE_LENGTH; i++)
+		spi->Shortest_Path[i]= way_1[i];
+
+	////add end
+
+	//change the order of shortest path
+	i=0;
+	j=0;
+	int w=0;
+	int t=0;
+	int temp1;
+	while(spi->Shortest_Path [j]!=-1)
+		j++;
+	j--;
+	t=(j-1)/2;
+	for(w=0;w<t;w++)
+	{
+		temp1=spi->Shortest_Path [i+w+1];
+		spi->Shortest_Path [i+w+1]=spi->Shortest_Path [j-w-1];
+		spi->Shortest_Path [j-w-1]=temp1;
+	}
+	
+	spi->End_Link_ID=End_Link_ID;
+
 	return spi;
 }
+
+
+
+
 
 bool Check_Load_or_Not()
 {
@@ -505,13 +677,22 @@ CString Get_Current_Directory()
 }
 
 
+char * CStringToCharStar(CString str)
+{
+	int Length= str.GetLength()+1;
+	char * output= new char[Length];
+	strncpy_s(output, Length, str, Length);
+
+	return output;
+}
+
 
 //make sure there exist 7 meter space to front/back vehicle
 bool Have_Space_In_Target_Lane(int Link_ID, int Lane_ID, int Cell_ID)
 {
 	if(Meter_Per_Cell>=VEHICLE_LENGTH)
 	{
-		if (Lane_Array[Link_ID][Lane_ID]->Lane_Cell[Cell_ID]->IsVehInCell()==false)
+		if (Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[Cell_ID]->IsVehInCell()==false)
 			return true;
 		else 
 			return false;
@@ -520,21 +701,57 @@ bool Have_Space_In_Target_Lane(int Link_ID, int Lane_ID, int Cell_ID)
 	{
 		int Cell_Number_In_Half_Side= VEHICLE_LENGTH;
 
-		if ( (Cell_ID - Cell_Number_In_Half_Side >=0)  && (Cell_ID + Cell_Number_In_Half_Side <Lane_Array[Link_ID][Lane_ID]->Cell_Number-1) )   //intermediate of link
+		if ( (Cell_ID - Cell_Number_In_Half_Side >=0)  && (Cell_ID + Cell_Number_In_Half_Side < Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number-1) )   //intermediate of link
 		{
 			for (int i=Cell_ID - Cell_Number_In_Half_Side; i<Cell_ID + Cell_Number_In_Half_Side; i++)
-				if (Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
+				if (Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
 					return false;
 			return true;
 		}
 		else if (Cell_ID-Cell_Number_In_Half_Side<0)   //the beginning of links
 		{
 			for (int i=0; i<Cell_Number_In_Half_Side; i++)
-				if (Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
+				if (Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
 					return false;
 			return true;
 		} 
 		else //others
 			return false;
 	}
+}
+
+
+void Record_Setting()
+{
+
+	char* FileName="Setting.txt";
+	
+	err->LogStrData(FileName, "Total day number is ");
+	err->LogIntData(FileName, G_Simulated_Day_Number);
+	err->LogStrData(FileName, "\n");
+	
+	err->LogStrData(FileName, "Commuter number of an origin is ");
+	err->LogIntData(FileName, G_Commuter_Number_Per_Origin);
+	err->LogStrData(FileName, "\n");
+	
+	err->LogStrData(FileName, "Day length is ");
+	err->LogIntData(FileName, G_Day_Length);
+	err->LogStrData(FileName, "\n");
+	
+	err->LogStrData(FileName, "Required arrival time is ");
+	err->LogIntData(FileName, G_Required_Arrival_Time);
+	err->LogStrData(FileName, "\n");
+	
+	err->LogStrData(FileName, "All commuter type is ");
+	err->LogIntData(FileName, All_Commuters_Type);
+	err->LogStrData(FileName, "\n");
+	
+	err->LogStrData(FileName, "Estimated waiting time in intersections is ");
+	err->LogIntData(FileName, Waiting_Time_In_Intersections);
+	err->LogStrData(FileName, "\n");
+	
+	err->LogStrData(FileName, "Estimated waiting cycle number is ");
+	err->LogIntData(FileName, Waiting_Cycle_Number);
+	err->LogStrData(FileName, "\n");
+
 }

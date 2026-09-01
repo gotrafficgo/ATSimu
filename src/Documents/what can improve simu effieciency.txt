@@ -1,3 +1,0 @@
-1. change points to int type
-2. change speed to int type
-3. use dynaic array

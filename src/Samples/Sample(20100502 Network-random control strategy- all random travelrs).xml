@@ -1,15 +1,12 @@
-﻿<Data>
-	<Demand>
-		<Time>0</Time>
-		<Value>5</Value>
+﻿<!-- edited with XMLSpy v2010 (http://www.altova.com) by iiiiice (tju) -->
+<Data>
+	<Demand> 
+		<Time>0</Time>  <!-- start time (hour) -->
+		<Value>1</Value> <!-- generated vehicle number per minute -->
 	</Demand>
-	<Demand>
-		<Time>0.25</Time>   <!-- time in Demand_Array[i][0] is hour -->
-		<Value>10</Value>
-	</Demand>
-	<Demand>
-		<Time>0.5</Time>
-		<Value>0</Value>
+	<Demand> 
+		<Time>1</Time> <!-- the number of last day-->
+		<Value>30</Value> <!-- generated vehicle number per minute -->
 	</Demand>
 	<MarginalPoint>
 		<Object_ID>0</Object_ID>
@@ -686,7 +683,7 @@
 		<Object_ID>12</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R12</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -709,7 +706,7 @@
 		<Object_ID>13</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R13</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -870,7 +867,7 @@
 		<Object_ID>20</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R20</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -893,7 +890,7 @@
 		<Object_ID>21</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R21</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -916,7 +913,7 @@
 		<Object_ID>22</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R22</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -939,7 +936,7 @@
 		<Object_ID>23</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R23</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1054,7 +1051,7 @@
 		<Object_ID>28</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R28</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1077,7 +1074,7 @@
 		<Object_ID>29</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R29</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1100,7 +1097,7 @@
 		<Object_ID>30</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R30</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1123,7 +1120,7 @@
 		<Object_ID>31</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R31</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1146,7 +1143,7 @@
 		<Object_ID>32</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R32</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1169,7 +1166,7 @@
 		<Object_ID>33</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R33</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1238,7 +1235,7 @@
 		<Object_ID>36</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R36</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1261,7 +1258,7 @@
 		<Object_ID>37</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R37</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1284,7 +1281,7 @@
 		<Object_ID>38</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R38</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1307,7 +1304,7 @@
 		<Object_ID>39</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R39</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1330,7 +1327,7 @@
 		<Object_ID>40</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R40</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1353,7 +1350,7 @@
 		<Object_ID>41</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R41</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1376,7 +1373,7 @@
 		<Object_ID>42</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R42</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1399,7 +1396,7 @@
 		<Object_ID>43</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R43</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1468,7 +1465,7 @@
 		<Object_ID>46</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R46</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1491,7 +1488,7 @@
 		<Object_ID>47</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R47</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1514,7 +1511,7 @@
 		<Object_ID>48</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R48</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1537,7 +1534,7 @@
 		<Object_ID>49</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R49</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1560,7 +1557,7 @@
 		<Object_ID>50</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R50</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1583,7 +1580,7 @@
 		<Object_ID>51</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R51</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1882,7 +1879,7 @@
 		<Object_ID>64</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R64</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1905,7 +1902,7 @@
 		<Object_ID>65</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R65</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1928,7 +1925,7 @@
 		<Object_ID>66</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R66</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1951,7 +1948,7 @@
 		<Object_ID>67</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R67</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1974,7 +1971,7 @@
 		<Object_ID>68</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R68</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -1997,7 +1994,7 @@
 		<Object_ID>69</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R69</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2112,7 +2109,7 @@
 		<Object_ID>74</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R74</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2135,7 +2132,7 @@
 		<Object_ID>75</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R75</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2158,7 +2155,7 @@
 		<Object_ID>76</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R76</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2181,7 +2178,7 @@
 		<Object_ID>77</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R77</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2342,7 +2339,7 @@
 		<Object_ID>84</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R84</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2365,7 +2362,7 @@
 		<Object_ID>85</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R85</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2756,7 +2753,7 @@
 		<Object_ID>102</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R102</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -2779,7 +2776,7 @@
 		<Object_ID>103</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R103</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -3032,7 +3029,7 @@
 		<Object_ID>114</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R114</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -3055,7 +3052,7 @@
 		<Object_ID>115</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R115</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -3308,7 +3305,7 @@
 		<Object_ID>126</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R126</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -3331,7 +3328,7 @@
 		<Object_ID>127</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R127</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -3538,7 +3535,7 @@
 		<Object_ID>136</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R136</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -3561,7 +3558,7 @@
 		<Object_ID>137</Object_ID>
 		<Object_Type>R</Object_Type>
 		<Object_Label>R137</Object_Label>
-		<Lane_Number>4</Lane_Number>
+		<Lane_Number>3</Lane_Number>
 		<Guidance_or_Not>0</Guidance_or_Not>
 		<Detector_Location>
 			<One>0</One>
@@ -3942,13 +3939,6 @@
 		<Link_ID>12</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>12</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -3969,13 +3959,6 @@
 	<Lane>
 		<Link_ID>13</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>13</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4124,13 +4107,6 @@
 		<Link_ID>20</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>20</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4151,13 +4127,6 @@
 	<Lane>
 		<Link_ID>21</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>21</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4180,13 +4149,6 @@
 		<Link_ID>22</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>22</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4207,13 +4169,6 @@
 	<Lane>
 		<Link_ID>23</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>23</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4320,13 +4275,6 @@
 		<Link_ID>28</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>28</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4347,13 +4295,6 @@
 	<Lane>
 		<Link_ID>29</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>29</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4376,13 +4317,6 @@
 		<Link_ID>30</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>30</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4403,13 +4337,6 @@
 	<Lane>
 		<Link_ID>31</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>31</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4432,13 +4359,6 @@
 		<Link_ID>32</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>32</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4459,13 +4379,6 @@
 	<Lane>
 		<Link_ID>33</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>33</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4530,13 +4443,6 @@
 		<Link_ID>36</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>36</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4557,13 +4463,6 @@
 	<Lane>
 		<Link_ID>37</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>37</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4586,13 +4485,6 @@
 		<Link_ID>38</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>38</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4613,13 +4505,6 @@
 	<Lane>
 		<Link_ID>39</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>39</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4642,13 +4527,6 @@
 		<Link_ID>40</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>40</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4669,13 +4547,6 @@
 	<Lane>
 		<Link_ID>41</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>41</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4698,13 +4569,6 @@
 		<Link_ID>42</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>42</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4725,13 +4589,6 @@
 	<Lane>
 		<Link_ID>43</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>43</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4796,13 +4653,6 @@
 		<Link_ID>46</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>46</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4823,13 +4673,6 @@
 	<Lane>
 		<Link_ID>47</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>47</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4852,13 +4695,6 @@
 		<Link_ID>48</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>48</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4879,13 +4715,6 @@
 	<Lane>
 		<Link_ID>49</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>49</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -4908,13 +4737,6 @@
 		<Link_ID>50</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>50</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -4935,13 +4757,6 @@
 	<Lane>
 		<Link_ID>51</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>51</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -5216,13 +5031,6 @@
 		<Link_ID>64</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>64</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -5243,13 +5051,6 @@
 	<Lane>
 		<Link_ID>65</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>65</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -5272,13 +5073,6 @@
 		<Link_ID>66</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>66</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -5299,13 +5093,6 @@
 	<Lane>
 		<Link_ID>67</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>67</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -5328,13 +5115,6 @@
 		<Link_ID>68</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>68</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -5355,13 +5135,6 @@
 	<Lane>
 		<Link_ID>69</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>69</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -5468,13 +5241,6 @@
 		<Link_ID>74</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>74</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -5495,13 +5261,6 @@
 	<Lane>
 		<Link_ID>75</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>75</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -5524,13 +5283,6 @@
 		<Link_ID>76</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>76</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -5551,13 +5303,6 @@
 	<Lane>
 		<Link_ID>77</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>77</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -5706,13 +5451,6 @@
 		<Link_ID>84</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>84</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -5733,13 +5471,6 @@
 	<Lane>
 		<Link_ID>85</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>85</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -6098,13 +5829,6 @@
 		<Link_ID>102</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>102</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -6125,13 +5849,6 @@
 	<Lane>
 		<Link_ID>103</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>103</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -6364,13 +6081,6 @@
 		<Link_ID>114</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>114</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -6391,13 +6101,6 @@
 	<Lane>
 		<Link_ID>115</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>115</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -6630,13 +6333,6 @@
 		<Link_ID>126</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>126</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -6657,13 +6353,6 @@
 	<Lane>
 		<Link_ID>127</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>127</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -6854,13 +6543,6 @@
 		<Link_ID>136</Link_ID>
 		<Lane_ID>2</Lane_ID>
 		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>136</Link_ID>
-		<Lane_ID>3</Lane_ID>
-		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
 	</Lane>
@@ -6881,13 +6563,6 @@
 	<Lane>
 		<Link_ID>137</Link_ID>
 		<Lane_ID>2</Lane_ID>
-		<Left_Turn>0</Left_Turn>
-		<Straight_Turn>1</Straight_Turn>
-		<Right_Turn>0</Right_Turn>
-	</Lane>
-	<Lane>
-		<Link_ID>137</Link_ID>
-		<Lane_ID>3</Lane_ID>
 		<Left_Turn>0</Left_Turn>
 		<Straight_Turn>0</Straight_Turn>
 		<Right_Turn>1</Right_Turn>
@@ -6978,13 +6653,13 @@
 	</Lane>
 	<Controller>
 		<Cross_ID>0</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>6</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>1</A>
 				<B>130</B>
@@ -6994,7 +6669,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>6</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>1</A>
 				<B>130</B>
@@ -7014,7 +6689,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>56</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>16</A>
 				<B>132</B>
@@ -7024,7 +6699,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>56</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>16</A>
 				<B>132</B>
@@ -7043,7 +6718,7 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>1</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
@@ -7108,13 +6783,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>2</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>49</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>2</A>
 				<B>5</B>
@@ -7124,7 +6799,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>49</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>2</A>
 				<B>5</B>
@@ -7144,7 +6819,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>99</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>12</A>
 				<B>136</B>
@@ -7154,7 +6829,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>99</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>12</A>
 				<B>136</B>
@@ -7173,13 +6848,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>3</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>38</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>4</A>
 				<B>7</B>
@@ -7189,7 +6864,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>38</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>4</A>
 				<B>7</B>
@@ -7209,7 +6884,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>88</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>10</A>
 				<B>138</B>
@@ -7219,7 +6894,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>88</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>10</A>
 				<B>138</B>
@@ -7238,13 +6913,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>4</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>26</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>6</A>
 				<B>98</B>
@@ -7254,7 +6929,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>26</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>6</A>
 				<B>98</B>
@@ -7274,7 +6949,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>76</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>8</A>
 				<B>140</B>
@@ -7284,7 +6959,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>76</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>8</A>
 				<B>140</B>
@@ -7303,13 +6978,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>5</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>26</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>17</A>
 				<B>34</B>
@@ -7319,7 +6994,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>26</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>17</A>
 				<B>34</B>
@@ -7339,7 +7014,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>76</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>19</A>
 				<B>128</B>
@@ -7349,7 +7024,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>76</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>19</A>
 				<B>128</B>
@@ -7368,13 +7043,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>6</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>49</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>15</A>
 				<B>32</B>
@@ -7384,7 +7059,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>49</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>15</A>
 				<B>32</B>
@@ -7404,7 +7079,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>99</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>18</A>
 				<B>21</B>
@@ -7414,7 +7089,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>99</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>18</A>
 				<B>21</B>
@@ -7433,13 +7108,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>7</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>25</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>20</A>
 				<B>23</B>
@@ -7449,7 +7124,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>25</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>20</A>
 				<B>23</B>
@@ -7469,7 +7144,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>75</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>13</A>
 				<B>30</B>
@@ -7479,7 +7154,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>75</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>13</A>
 				<B>30</B>
@@ -7498,13 +7173,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>8</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>14</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>11</A>
 				<B>28</B>
@@ -7514,7 +7189,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>14</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>11</A>
 				<B>28</B>
@@ -7534,7 +7209,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>64</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>22</A>
 				<B>25</B>
@@ -7544,7 +7219,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>64</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>22</A>
 				<B>25</B>
@@ -7563,13 +7238,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>9</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>41</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>24</A>
 				<B>100</B>
@@ -7579,7 +7254,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>41</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>24</A>
 				<B>100</B>
@@ -7599,7 +7274,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>91</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>9</A>
 				<B>26</B>
@@ -7609,7 +7284,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>91</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>9</A>
 				<B>26</B>
@@ -7628,13 +7303,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>10</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>4</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>37</A>
 				<B>126</B>
@@ -7644,7 +7319,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>4</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>37</A>
 				<B>126</B>
@@ -7664,7 +7339,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>54</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>35</A>
 				<B>52</B>
@@ -7674,7 +7349,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>54</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>35</A>
 				<B>52</B>
@@ -7693,13 +7368,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>11</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>38</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>36</A>
 				<B>39</B>
@@ -7709,7 +7384,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>38</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>36</A>
 				<B>39</B>
@@ -7729,7 +7404,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>88</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>33</A>
 				<B>50</B>
@@ -7739,7 +7414,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>88</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>33</A>
 				<B>50</B>
@@ -7758,13 +7433,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>12</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>17</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>38</A>
 				<B>41</B>
@@ -7774,7 +7449,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>17</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>38</A>
 				<B>41</B>
@@ -7794,7 +7469,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>67</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>31</A>
 				<B>48</B>
@@ -7804,7 +7479,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>67</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>31</A>
 				<B>48</B>
@@ -7823,13 +7498,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>13</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>47</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>40</A>
 				<B>43</B>
@@ -7839,7 +7514,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>47</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>40</A>
 				<B>43</B>
@@ -7859,7 +7534,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>97</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>29</A>
 				<B>46</B>
@@ -7869,7 +7544,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>97</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>29</A>
 				<B>46</B>
@@ -7888,13 +7563,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>14</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>29</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>42</A>
 				<B>102</B>
@@ -7904,7 +7579,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>29</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>42</A>
 				<B>102</B>
@@ -7924,7 +7599,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>79</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>27</A>
 				<B>44</B>
@@ -7934,7 +7609,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>79</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>27</A>
 				<B>44</B>
@@ -7953,13 +7628,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>15</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>23</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>55</A>
 				<B>124</B>
@@ -7969,7 +7644,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>23</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>55</A>
 				<B>124</B>
@@ -7989,7 +7664,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>73</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>53</A>
 				<B>70</B>
@@ -7999,7 +7674,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>73</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>53</A>
 				<B>70</B>
@@ -8018,13 +7693,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>16</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>18</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>54</A>
 				<B>57</B>
@@ -8034,7 +7709,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>18</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>54</A>
 				<B>57</B>
@@ -8054,7 +7729,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>68</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>51</A>
 				<B>68</B>
@@ -8064,7 +7739,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>68</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>51</A>
 				<B>68</B>
@@ -8083,13 +7758,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>17</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>23</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>56</A>
 				<B>59</B>
@@ -8099,7 +7774,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>23</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>56</A>
 				<B>59</B>
@@ -8119,7 +7794,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>73</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>49</A>
 				<B>66</B>
@@ -8129,7 +7804,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>73</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>49</A>
 				<B>66</B>
@@ -8148,13 +7823,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>18</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>27</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>58</A>
 				<B>61</B>
@@ -8164,7 +7839,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>27</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>58</A>
 				<B>61</B>
@@ -8184,7 +7859,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>77</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>47</A>
 				<B>64</B>
@@ -8194,7 +7869,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>77</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>47</A>
 				<B>64</B>
@@ -8213,13 +7888,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>19</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>29</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>60</A>
 				<B>104</B>
@@ -8229,7 +7904,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>29</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>60</A>
 				<B>104</B>
@@ -8249,7 +7924,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>79</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>45</A>
 				<B>62</B>
@@ -8259,7 +7934,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>79</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>45</A>
 				<B>62</B>
@@ -8278,13 +7953,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>20</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>45</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>73</A>
 				<B>122</B>
@@ -8294,7 +7969,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>45</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>73</A>
 				<B>122</B>
@@ -8314,7 +7989,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>95</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>71</A>
 				<B>88</B>
@@ -8324,7 +7999,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>95</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>71</A>
 				<B>88</B>
@@ -8343,13 +8018,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>21</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>3</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>72</A>
 				<B>75</B>
@@ -8359,7 +8034,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>3</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>72</A>
 				<B>75</B>
@@ -8379,7 +8054,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>53</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>69</A>
 				<B>86</B>
@@ -8389,7 +8064,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>53</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>69</A>
 				<B>86</B>
@@ -8408,13 +8083,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>22</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>32</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>74</A>
 				<B>77</B>
@@ -8424,7 +8099,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>32</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>74</A>
 				<B>77</B>
@@ -8444,7 +8119,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>82</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>67</A>
 				<B>84</B>
@@ -8454,7 +8129,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>82</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>67</A>
 				<B>84</B>
@@ -8473,7 +8148,7 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>23</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
@@ -8538,13 +8213,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>24</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>4</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>78</A>
 				<B>106</B>
@@ -8554,7 +8229,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>4</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>78</A>
 				<B>106</B>
@@ -8574,7 +8249,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>54</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>63</A>
 				<B>80</B>
@@ -8584,7 +8259,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>54</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>63</A>
 				<B>80</B>
@@ -8603,13 +8278,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>25</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>100</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>40</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>91</A>
 				<B>120</B>
@@ -8619,7 +8294,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>40</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>91</A>
 				<B>120</B>
@@ -8639,7 +8314,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>90</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>89</A>
 				<B>118</B>
@@ -8649,7 +8324,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>90</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>89</A>
 				<B>118</B>
@@ -8668,13 +8343,13 @@
 	</Controller>
 	<Controller>
 		<Cross_ID>26</Cross_ID>
-		<Cycle_Time>90</Cycle_Time>
+		<Cycle_Time>120</Cycle_Time>
 		<Phase_Number>6</Phase_Number>
 		<Phase>
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>3</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>90</A>
 				<B>93</B>
@@ -8684,7 +8359,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>3</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>90</A>
 				<B>93</B>
@@ -8704,7 +8379,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>53</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>87</A>
 				<B>116</B>
@@ -8714,7 +8389,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>53</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>87</A>
 				<B>116</B>
@@ -8739,7 +8414,7 @@
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>18</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>92</A>
 				<B>95</B>
@@ -8749,7 +8424,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>18</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>92</A>
 				<B>95</B>
@@ -8769,7 +8444,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>68</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>85</A>
 				<B>114</B>
@@ -8779,7 +8454,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>68</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>85</A>
 				<B>114</B>
@@ -8804,7 +8479,7 @@
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>17</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>94</A>
 				<B>97</B>
@@ -8814,7 +8489,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>17</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>94</A>
 				<B>97</B>
@@ -8834,7 +8509,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>67</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>83</A>
 				<B>112</B>
@@ -8844,7 +8519,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>67</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>83</A>
 				<B>112</B>
@@ -8869,7 +8544,7 @@
 			<Phase_ID>0</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>6</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>96</A>
 				<B>108</B>
@@ -8879,7 +8554,7 @@
 			<Phase_ID>1</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>0</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>6</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>96</A>
 				<B>108</B>
@@ -8899,7 +8574,7 @@
 			<Phase_ID>3</Phase_ID>
 			<Direction>1</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>56</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>81</A>
 				<B>110</B>
@@ -8909,7 +8584,7 @@
 			<Phase_ID>4</Phase_ID>
 			<Direction>0</Direction>
 			<Green_Percent>50</Green_Percent>
-			<Green_Start_Time_Percent>50</Green_Start_Time_Percent>
+			<Green_Start_Time_Percent>56</Green_Start_Time_Percent>
 			<Connect_Link_ID>
 				<A>81</A>
 				<B>110</B>

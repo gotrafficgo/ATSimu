@@ -31,4 +31,5 @@ public:
 	double m_P2;
 	afx_msg void OnBnClickedOk();
 	void Reset_Cell_Length(char Type);
+	afx_msg void OnBnClickedCancel();
 };

@@ -29,7 +29,7 @@ CPhase::CPhase(int phase_id,   int green_percent,   int direction,   int cycle_t
 	Cycle_Time=cycle_time;
 	Green_Start_Time=int(cycle_time*green_start_time_percent/100);
 	Direction= direction;
-	Last_Color= 'N'; //ÉÏ´ÎÑÕÉ«£¬Ã»ÓÐÑÕÉ«£¬³õÊ¼
+	Last_Color= 'N';
 	Phase_Last_Refresh_Time=0;
 	for (int i=0; i<LINK_IN_ONE_PHASE; i++)
 		Connect_Link_Array[i]=connect_link_array[i];
@@ -62,20 +62,28 @@ char CPhase::Get_Current_Color()
 	Time_in_Phase= (simu_time-Phase_Last_Refresh_Time)%Cycle_Time;	
 	Green_Time= int(Green_Percent*Cycle_Time/100);
 
+	if (Green_Start_Time + Green_Time <=Cycle_Time)
+	{
+		if (Time_in_Phase < Green_Start_Time)   
+			Current_Color='R';
+		if (Green_Start_Time <=Time_in_Phase && Time_in_Phase <Green_Start_Time+Green_Time)
+			Current_Color='G';
+		if (Green_Start_Time+Green_Time <=Time_in_Phase)
+			Current_Color='R';
+	}
+	else
+	{
+		int Green_Time_2=Cycle_Time - Green_Start_Time;
+		int Green_Time_1=Green_Time-Green_Time_2;
 
-	if (Time_in_Phase < Green_Start_Time)    //ÂÌµÆ¿ªÊ¼Ö®Ç°ÊÇºìµÆ
-	{
-		Current_Color='R';
+		if (Time_in_Phase < Green_Time_1)   
+			Current_Color='G';
+		if (Green_Time_1 <=Time_in_Phase && Time_in_Phase <Green_Start_Time)
+			Current_Color='R';
+		if (Green_Start_Time <=Time_in_Phase)
+			Current_Color='G';		
 	}
-	if (Green_Start_Time <=Time_in_Phase && Time_in_Phase <Green_Start_Time+Green_Time)
-	{
-		Current_Color='G';
-	}
-	if (Green_Start_Time+Green_Time <=Time_in_Phase)
-	{
-		Current_Color='R';
-	}
-	
+
 	return Current_Color;
 }
 
@@ -90,7 +98,7 @@ int CPhase::Get_Left_Time()
 	Green_Time=int(Green_Percent*Cycle_Time/100);
 	Current_Color=Get_Current_Color();
 
-	if (Time_in_Phase < Green_Start_Time)    //ÂÌµÆ¿ªÊ¼Ö®Ç°ÊÇºìµÆ
+	if (Time_in_Phase < Green_Start_Time)    
 	{
 		Left_Time= Green_Start_Time- Time_in_Phase;
 	}
@@ -98,7 +106,7 @@ int CPhase::Get_Left_Time()
 	{
 		Left_Time= Green_Start_Time+Green_Time - Time_in_Phase;
 	}
-	if (Green_Start_Time+Green_Time <=Time_in_Phase && Time_in_Phase<Cycle_Time)   //Time_in_Phase ÊôÓÚ[0, Cycle_Time-1]
+	if (Green_Start_Time+Green_Time <=Time_in_Phase && Time_in_Phase<Cycle_Time)   
 	{
 		Left_Time= Cycle_Time - Time_in_Phase;
 	}
@@ -107,7 +115,7 @@ int CPhase::Get_Left_Time()
 }
 
 
-Info_Light_Color_and_Time CPhase::Get_Phase_LCT()  //Phase_ID ÏàÎ»ÔÚContollerÖÐµÄÐòºÅ
+Info_Light_Color_and_Time CPhase::Get_Phase_LCT() 
 {
 	extern char Current_Control_Type;
 	Info_Light_Color_and_Time LCT;
@@ -119,7 +127,7 @@ Info_Light_Color_and_Time CPhase::Get_Phase_LCT()  //Phase_ID ÏàÎ»ÔÚContollerÖÐµ
 		return LCT;
 	}
 	
-	int Time_in_Phase;     //ÏàÎ»ÖÐµÄÊ±¼ä
+	int Time_in_Phase;     
 	Time_in_Phase= (simu_time-Phase_Last_Refresh_Time)%Cycle_Time;        //0---Cycle_Time-1
 
 	LCT.Light_Color= Get_Current_Color();

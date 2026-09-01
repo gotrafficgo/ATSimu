@@ -4,7 +4,7 @@
 struct Struct_Shortest_Path
 {
 	int End_Link_ID;
-	int Shortest_Path_Dist;
+	int Travel_Time_On_Shortest_Path;    
 	int Shortest_Path[MAX_ROUTE_LENGTH]; 
 };
 
@@ -148,3 +148,22 @@ struct Struct_FixedOD
 	int Dest;
 	int Demand;
 };
+
+
+struct Struct_Departure_Arrival_Rate
+{
+	int Departure_Traveler;
+	int Departure_Commuter;
+	int Arrival_Traveler;
+	int Arrival_Commuter;
+};
+
+
+struct Struct_Spatial_Distribution
+{
+	int Day;
+	int Day_Time;
+	int Link_Veh_Number_Array[MAX_LINK_NUMBER]; //[veh number on links]
+};
+
+

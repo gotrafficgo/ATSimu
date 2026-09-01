@@ -29,6 +29,11 @@ public:
 	int		m_simu_time;
 	int		m_veh_number;
 	int		m_total_veh_number;
+	CString m_simu_time_2;
+	int m_day;
+	int m_day_time;
+	int m_traveler_number;
+	int m_commuter_number;
 	//}}AFX_DATA
 
 
@@ -49,8 +54,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-public:
-	CString m_simu_time_2;
+
 };
 
 //{{AFX_INSERT_LOCATION}}

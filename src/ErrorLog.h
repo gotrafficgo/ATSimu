@@ -15,6 +15,7 @@ public:
 	virtual ~ErrorLog();
 	FILE*  OpenedFile(CString FileName);
 	void CloseAllFiles();
+	void FlushAllFiles();
 	void Log(char *FileName, char* info=NULL);
 	void LogIntData(char *FileName, int data);
 	void LogStrData(char *FileName, CString data);

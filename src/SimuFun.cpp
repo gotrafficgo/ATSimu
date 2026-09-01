@@ -14,6 +14,8 @@
 #include "RanDestOrigin.h"
 #include "Dest.h"
 #include "FixDestOrigin.h"
+#include "Commuter.h"
+
 using namespace std;
          
 CSimuFun::CSimuFun()
@@ -39,8 +41,10 @@ CSimuFun::CSimuFun()
 		Checking_Region= CHECKING_REGION_F;
 	}
 
+	Total_Simulation_Time= G_Simulated_Day_Number * G_Day_Length;
 
-	this->Information_Ready=false;
+
+//	this->Information_Ready=false;
 
 	int i,j;
 	for(i=0;i<MAX_MARGINALPOINT_NUMBER;i++)
@@ -56,10 +60,6 @@ CSimuFun::CSimuFun()
 		for(j=0;j<MAX_MARGINALPOINT_NUMBER+MAX_CROSS_NUMBER;j++)
 			Node_Relation[i][j]=NULL;
     
-	for(i=0;i<MAX_LINK_NUMBER;i++)
-		for(j=0;j<MAX_LANE_NUMBER;j++)
-			Lane_Array[i][j] = new CLane();
-	
 	for(i=0;i<MAX_CROSS_NUMBER;i++)
 	{
 		for(j=0; j<MAX_CROSS_LANE_NUMBER; j++)
@@ -68,11 +68,16 @@ CSimuFun::CSimuFun()
 		for (j=0;j<MAX_CONFLICT_AREA_NUMBER;j++)
 			Conflict_Area_Array[i][j]=NULL;
 	}
+
+
+	Record_Setting();
+
 }
 
 CSimuFun::~CSimuFun()
 {
 }
+
 
 
 
@@ -867,28 +872,28 @@ int CSimuFun::Get_XML_Lane(MSXML2::IXMLDOMDocumentPtr  pDOMDoc)
 		pSubNode=pNodeList_Lane_ID->nextNode()->selectSingleNode("Lane_ID");  
 		strRequestType=pSubNode->Gettext(); 
 		w = atoi(strRequestType.operator char*());
-		Lane_Array[Link_ID][w]->Lane_ID = w  ;   
+		Link_Array[Link_ID]->Lanes[w]->Lane_ID = w  ;   
 
 		pSubNode=pNodeList_Left_Turn->nextNode()->selectSingleNode("Left_Turn");  
 		strRequestType=pSubNode->Gettext(); 
 		if(atoi(strRequestType.operator char*()) == 0)
-			Lane_Array[Link_ID][w]->Left_Turn = false  ;
+			Link_Array[Link_ID]->Lanes[w]->Left_Turn = false  ;
 		else
-			Lane_Array[Link_ID][w]->Left_Turn = true;
+			Link_Array[Link_ID]->Lanes[w]->Left_Turn = true;
 		
 		pSubNode=pNodeList_Straight_Turn->nextNode()->selectSingleNode("Straight_Turn");  
 		strRequestType=pSubNode->Gettext(); 
 		if(atoi(strRequestType.operator char*()) == 0)
-			Lane_Array[Link_ID][w]->Straight_Turn = false  ;
+			Link_Array[Link_ID]->Lanes[w]->Straight_Turn = false  ;
 		else
-			Lane_Array[Link_ID][w]->Straight_Turn = true;
+			Link_Array[Link_ID]->Lanes[w]->Straight_Turn = true;
 		
 		pSubNode=pNodeList_Right_Turn->nextNode()->selectSingleNode("Right_Turn");  
 		strRequestType=pSubNode->Gettext(); 
 		if(atoi(strRequestType.operator char*()) == 0)
-			Lane_Array[Link_ID][w]->Right_Turn = false  ;
+			Link_Array[Link_ID]->Lanes[w]->Right_Turn = false  ;
 		else
-			Lane_Array[Link_ID][w]->Right_Turn = true;
+			Link_Array[Link_ID]->Lanes[w]->Right_Turn = true;
 	}
     return  pNodeList_Link_ID->Getlength();
 }
@@ -976,14 +981,31 @@ int CSimuFun::Get_XML_OD(MSXML2::IXMLDOMDocumentPtr  pDOMDoc)
 void CSimuFun::Set_Lane_Cell_Coordinate()
 {
 	int i,j;
+	
 	for(i=0;i<G_Link_Number;i++)
 	{
+		int Cell_Number=0;
 		for(j=0;j<Link_Array[i]->Lane_Number;j++)
 		{
-			if(Lane_Array[i][j] == NULL)
+			if(Link_Array[i]->Lanes[j] == NULL)
 				AfxMessageBox("Error---CSimuFun::Set_Lane_Cell_Coordinate()");
 			else
-				Lane_Array[i][j]->Set_Value(Link_Array[i]->Lane_Middle_Start_Point[j], Link_Array[i]->Lane_Middle_End_Point[j]);
+				Cell_Number= Link_Array[i]->Lanes[j]->Set_Value(Link_Array[i]->Lane_Middle_Start_Point[j], Link_Array[i]->Lane_Middle_End_Point[j]);
+
+			if (j==0)   //taking the cell number of the first (far left) lane as the length of the link. In fact, the lengthes of lanes are the same
+			{
+				Link_Array[i]->Length_In_Cell=Cell_Number;
+
+				int Free_Flow_Travel_Time= ( Cell_Number*Meter_Per_Cell) / Link_Array[i]->Limited_Speed;   //limited_speed, the unit is cell number
+
+				int Travel_Time= Free_Flow_Travel_Time 
+					                 + Waiting_Time_In_Intersections
+									 + Waiting_Cycle_Number*100;	
+
+				Link_Array[i]->Length_In_FFTT= Travel_Time;
+				Link_Array[i]->Current_On_Link_Time= Travel_Time;
+				
+			}
 		}
 	}
 }   
@@ -1011,7 +1033,7 @@ void CSimuFun::Set_Cross_Lane_Cell_and_Enter_Link()
 				{	
 					/////////////////////////////////
 					//left turn
-					if(Lane_Array[Enter_Link_ID][enter_link_lane_i]->Left_Turn==true )  //left turn lane
+					if(Link_Array[Enter_Link_ID]->Lanes[enter_link_lane_i]->Left_Turn==true )  //left turn lane
 					{
 						Next_Link_ID= Link_Array[Enter_Link_ID]->Next_Left_Link;
 						for (next_link_lane_i=0; next_link_lane_i<Link_Array[Next_Link_ID]->Lane_Number; next_link_lane_i++ )
@@ -1030,7 +1052,7 @@ void CSimuFun::Set_Cross_Lane_Cell_and_Enter_Link()
 					
 					/////////////////////////////////
 					//through traffic
-					if(Lane_Array[Enter_Link_ID][enter_link_lane_i]->Straight_Turn==true )  
+					if(Link_Array[Enter_Link_ID]->Lanes[enter_link_lane_i]->Straight_Turn==true )  
 					{
 						Next_Link_ID= Link_Array[Enter_Link_ID]->Next_Straight_Link;
 						//determine next_link_lane_i
@@ -1044,7 +1066,7 @@ void CSimuFun::Set_Cross_Lane_Cell_and_Enter_Link()
 
 					///////////////////////////////////
 					//right turn
-					if(Lane_Array[Enter_Link_ID][enter_link_lane_i]->Right_Turn==true)
+					if(Link_Array[Enter_Link_ID]->Lanes[enter_link_lane_i]->Right_Turn==true)
 					{
 						Next_Link_ID= Link_Array[Enter_Link_ID]->Next_Right_Link;
 						for (next_link_lane_i=0; next_link_lane_i<Link_Array[Next_Link_ID]->Lane_Number; next_link_lane_i++ )
@@ -1118,6 +1140,10 @@ void CSimuFun::Add_Cross_Lane(int Cross_ID,int Cross_Lane_ID, int Enter_Link_ID,
 	}
 }
 
+
+
+
+
 void CSimuFun::Simu_Go_A_Step()
 {
 	int link_i;   
@@ -1133,11 +1159,47 @@ void CSimuFun::Simu_Go_A_Step()
 	extern char Current_Control_Type;
 	extern CSampleCollection *pSampleCollection;
 
-//////////////////////////////////////////
+
+//*********************************************************************************************************************************************
 //Generate vehicle && Vehicles on link run && guidance boards work
 	for(link_i=0;link_i<G_Link_Number;link_i++)    //iterate every link
 	{
-////////////Generate veh
+
+		//at the end/beginning of a day, reset the location of commuters
+		if (simu_time%G_Day_Length==0)     
+			for (int origin_i=0; origin_i<Link_Array[link_i]->Origin_Number;origin_i++)
+				for (int commuter_i=0; commuter_i<Link_Array[link_i]->Origin_Array[origin_i]->Commuter_Number; commuter_i++)
+					Link_Array[link_i]->Origin_Array[origin_i]->Commuter_Array[commuter_i]->Set_At_Day_Beginning();
+
+
+		//generate "vehicles + commuters"
+		for (int origin_i=0; origin_i<Link_Array[link_i]->Origin_Number;origin_i++)
+			for (int commuter_i=0; commuter_i<Link_Array[link_i]->Origin_Array[origin_i]->Commuter_Number; commuter_i++)
+			{
+				CCommuter* pCommuter = Link_Array[link_i]->Origin_Array[origin_i]->Commuter_Array[commuter_i];
+
+				if (pCommuter->Current_Location == 'H')
+					if (pCommuter->Home_Or_Not() && pCommuter->Depart_Or_Not())   //at home && it is time to depart
+					{
+						int Load_Lane_ID= Link_Array[link_i]->Origin_Array[origin_i]->Get_Load_Lane_ID();
+						int Located_Cell_ID = Link_Array[link_i]->Origin_Array[origin_i]->Located_Cell_ID;
+						if (Load_Lane_ID!=-1)   //can't find out an available cell for the vehcle on any lane.
+							if (false == Link_Array[link_i]->Lanes[Load_Lane_ID] ->Lane_Cell[Located_Cell_ID]->IsVehInCell() )
+							{
+								CVeh * pVeh = new CVeh(Total_Veh_Number, 0, Located_Cell_ID , pCommuter);   //taking a vehilce
+								Link_Array[link_i]->Lanes[Load_Lane_ID] ->Lane_Cell[Located_Cell_ID]->PutVehInCell(pVeh);
+								pCommuter->Current_Location='R';
+								pCommuter->Departure_Time_Array[current_day-1]=time_in_current_day;
+								pCommuter->Enter_Link_Time= simu_time;
+								Total_Veh_Number++;					
+								Commuter_Number_On_Network++;
+								pSampleCollection->One_Depart('C');
+							}
+					}
+			}
+	
+//*********************************************************************************************************************************************
+		////////////Generate veh
 //   	if (link_i==130)   //0505                                                       //only generate vehs on a specific link
 //		if (Link_Array[link_i]->Start_Object->Object_Type=='M')     //only generate vehs on the edge
 
@@ -1156,26 +1218,35 @@ void CSimuFun::Simu_Go_A_Step()
 		for (int i=0; i<Link_Array[link_i]->Origin_Number;i++)
 			Link_Array[link_i]->Origin_Array[i]->Produce_Veh();
 
+
+//*********************************************************************************************************************************************
+		/* //don't need this currently
 		//guidance information board work
 		if (Switch_Guidance)
 			if(Link_Array[link_i]->guidance!=NULL)
 				Link_Array[link_i]->guidance->Guidance_Run();
+		*/
 
+
+//*********************************************************************************************************************************************
 		//vehicles run
 		for(lane_i=0;lane_i<Link_Array[link_i]->Lane_Number;lane_i++)                      //iterate lane
-			for(cell_i=Lane_Array[link_i][lane_i]->Cell_Number-1;cell_i>=0;cell_i--)           //iterate cell  forward
-				if(Lane_Array[link_i][lane_i]->Lane_Cell[cell_i]->IsVehInCell()==true)
-					Lane_Array[link_i][lane_i]->Lane_Cell[cell_i]->GetVehFromCell()->Veh_On_Link (Link_Array[link_i]->End_Object->Object_ID, link_i, lane_i, cell_i);
+			for(cell_i=Link_Array[link_i]->Lanes[lane_i]->Cell_Number-1;cell_i>=0;cell_i--)           //iterate cell  forward
+				if(Link_Array[link_i]->Lanes[lane_i]->Lane_Cell[cell_i]->IsVehInCell()==true)
+					Link_Array[link_i]->Lanes[lane_i]->Lane_Cell[cell_i]->GetVehFromCell()->Veh_On_Link (Link_Array[link_i]->End_Object->Object_ID, link_i, lane_i, cell_i);
 
+//*********************************************************************************************************************************************
+		/* //don't need this currently
 		//G2Detector run
 		for(lane_i=0;lane_i<Link_Array[link_i]->Lane_Number;lane_i++)                      //iterate lane
-			for(cell_i=Lane_Array[link_i][lane_i]->Cell_Number-1;cell_i>=0;cell_i--)           //iterate cell  forward
-				if(Lane_Array[link_i][lane_i]->Lane_Cell[cell_i]->pG2Detector!=NULL)
-					Lane_Array[link_i][lane_i]->Lane_Cell[cell_i]->pG2Detector->Run();
+			for(cell_i=Link_Array[link_i]->Lanes[lane_i]->Cell_Number-1;cell_i>=0;cell_i--)           //iterate cell  forward
+				if(Link_Array[link_i]->Lanes[lane_i]->Lane_Cell[cell_i]->pG2Detector!=NULL)
+					Link_Array[link_i]->Lanes[lane_i]->Lane_Cell[cell_i]->pG2Detector->Run();
+		*/
 	}
 
 
-////////////////////////////////////////
+//*********************************************************************************************************************************************
 //detectors work (only when Switch_Detector==true && traffic control is available (not yellow))
 	if (Switch_Detector && Current_Control_Type!='N')
 	{
@@ -1189,9 +1260,9 @@ void CSimuFun::Simu_Go_A_Step()
 					//intersection detectors don't work under red traffic light
 					if (Link_Array[link_i]->Detector_Array[detector_i]->Detector_Type=='C')
 					{
-						if (Lane_Array[link_i][lane_i]->Phase!=NULL)
+						if (Link_Array[link_i]->Lanes[lane_i]->Phase!=NULL)
 						{
-							if(Lane_Array[link_i][lane_i]->Phase->Get_Current_Color()=='R')
+							if(Link_Array[link_i]->Lanes[lane_i]->Phase->Get_Current_Color()=='R')
 							{
 								aFlag=true;
 							}
@@ -1209,7 +1280,7 @@ void CSimuFun::Simu_Go_A_Step()
 							int End_of_Detector_Location= Detector_Location - (Link_Array[link_i]->Limited_Speed+1);
 							for (int the_cell_i= Detector_Location; the_cell_i>End_of_Detector_Location; the_cell_i--)
 							{
-								theVeh=Lane_Array[link_i][lane_i]->Lane_Cell[the_cell_i]->GetVehFromCell();
+								theVeh=Link_Array[link_i]->Lanes[lane_i]->Lane_Cell[the_cell_i]->GetVehFromCell();
 								Link_Array[link_i]->Detector_Array[detector_i]->Detector_Run(theVeh, Turn_Direction);
 							}
 						}
@@ -1223,10 +1294,11 @@ void CSimuFun::Simu_Go_A_Step()
 	}
 
 
-////////////////////////////////////////
+//*********************************************************************************************************************************************
 //controllers work && vehicles in intersection run
-	for(cross_i=0;cross_i<G_Cross_Number;cross_i++)        
-		for(cross_lane_i=0; cross_lane_i<MAX_CROSS_LANE_NUMBER; cross_lane_i++)
+	for(cross_i=0;cross_i<G_Cross_Number;cross_i++)       
+	{
+		for(cross_lane_i=MAX_CROSS_LANE_NUMBER-1; cross_lane_i>=0; cross_lane_i--)
 			if(Cross_Lane_Array[cross_i][cross_lane_i]!=NULL)      
 				for (cell_i=Cross_Lane_Array[cross_i][cross_lane_i]->Cell_Number-1; cell_i>=0; cell_i--)
 					if(Cross_Lane_Array[cross_i][cross_lane_i]->Cross_Lane_Cell[cell_i]->IsVehInCell()==true)    //iterate forward
@@ -1234,22 +1306,134 @@ void CSimuFun::Simu_Go_A_Step()
 						Cross_Lane_Array[cross_i][cross_lane_i]->Cross_Lane_Cell[cell_i]->GetVehFromCell()->Cross_Move_Check_Time= simu_time;
 						Cross_Lane_Array[cross_i][cross_lane_i]->Cross_Lane_Cell[cell_i]->GetVehFromCell()->Veh_in_Cross(cross_i,cross_lane_i,cell_i);
 					}
+	}
 
+//*********************************************************************************************************************************************
 	//iterate every intersection and make its controller work
 	for(cross_i=0;cross_i<G_Cross_Number;cross_i++)        
 		if (Cross_Array[cross_i]->Controller!=NULL)  //if there exist controller
 			Cross_Array[cross_i]->Controller->Controller_Run();
 
-	///////////////////////
-// if (simu_time%5==0)                //every 5 seconds, collect one data.   Note: it will influence the broadcasting of information
+//*********************************************************************************************************************************************
+
+	// if (simu_time%5==0)                //every 5 seconds, collect one data.   Note: it will influence the broadcasting of information
 // {
-		this->Update_On_Link_Data();
-		pSampleCollection->Update_Avg_K_Q();
-		pSampleCollection->Reset_Veh_Data_On_Link();
+	this->Update_On_Link_Data();   //update link information: 1. On_Link_Veh_Number; 2. Sum_Of_Speed; 3. "Current_On_Link_Time"  for information broadcasting
+	pSampleCollection->Update_Avg_K_Q();
 //}
+	pSampleCollection->Update_Departure_Arrival_Rate();
+	pSampleCollection->Reset_Departure_Arrival_Counter();
+	if (time_in_current_day!=0 && time_in_current_day%300==0)   //every 300 sec
+		pSampleCollection->Update_Spatial_Distribution(current_day, time_in_current_day);    //record vehicle number on links every 300 sec.
+	pSampleCollection->Reset_Veh_Data_On_Link();  //reset 1. On_Link_Veh_Number=0; 2. Sum_Of_Speed=0;
+
+
+//*********************************************************************************************************************************************
+////////////////////////////////////////////
+//clear unarrival commuter on network at the last time of the day
+	if (simu_time!=0 && simu_time - (current_day-1)*G_Day_Length==G_Day_Length-1)    //3999,7999,...
+	{
+		int Not_Able_Finished_Commuter_Number=0;
+		for (int link_i=0; link_i<G_Link_Number;link_i++)
+			for(int lane_i=0;lane_i<Link_Array[link_i]->Lane_Number;lane_i++)                      //iterate lane
+				for(int cell_i=Link_Array[link_i]->Lanes[lane_i]->Cell_Number-1;cell_i>=0;cell_i--)           //iterate cell  forward
+				{
+					CVeh* pVeh= Link_Array[link_i]->Lanes[lane_i]->Lane_Cell[cell_i]->GetVehFromCell();
+					if( pVeh!=NULL)
+					{					
+						if ('C' == pVeh->The_Driver->Get_Driver_Type())
+						{
+							Not_Able_Finished_Commuter_Number++;
+							pVeh->The_Driver->Set_After_Arrival(simu_time);
+							pVeh->The_Driver->Record_Travel_Experience_On_Link(simu_time, -1);
+						}
+						pVeh->Leave_Network_From_Link(link_i, lane_i, cell_i);
+					}
+				}
+
+
+		for(int cross_i=0;cross_i<G_Cross_Number;cross_i++)        
+			for(int cross_lane_i=0; cross_lane_i<MAX_CROSS_LANE_NUMBER; cross_lane_i++)
+				if(Cross_Lane_Array[cross_i][cross_lane_i]!=NULL)      
+					for (int cell_i=Cross_Lane_Array[cross_i][cross_lane_i]->Cell_Number-1; cell_i>=0; cell_i--)
+						if(Cross_Lane_Array[cross_i][cross_lane_i]->Cross_Lane_Cell[cell_i]->IsVehInCell()==true)    //iterate forward
+						{
+							CVeh* pVeh= Cross_Lane_Array[cross_i][cross_lane_i]->Cross_Lane_Cell[cell_i]->GetVehFromCell();
+							if( pVeh!=NULL)
+							{					
+								if ('C' == pVeh->The_Driver->Get_Driver_Type())
+								{
+									Not_Able_Finished_Commuter_Number++;
+									pVeh->The_Driver->Set_After_Arrival(simu_time);
+									pVeh->The_Driver->Record_Travel_Experience_On_Link(simu_time, -1);
+								}
+								pVeh->Leave_Network_From_Intersection(cross_i, cross_lane_i, cell_i);
+							}
+						}
+
+////////////////////////////////////////////
+		//record at the end of every day
+		if (Output_MFD)
+		{
+			pSampleCollection->Record_MFD();
+			pSampleCollection->Empty_MFD_Record();
+
+		}
+		if (Output_DepartureArrivalRate)
+		{
+			pSampleCollection->Record_Departure_Arrival_Rate();
+			pSampleCollection->Empty_SDAR_Record();
+		}
+
+		if (Output_SpatialDistribution)
+		{
+			pSampleCollection->Record_Spatial_Distribution();
+			pSampleCollection->Empty_SSD_Record();
+		}
+
+		if (Output_RouteChoice)
+		{
+			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,0);
+			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,1);
+			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,2);
+//			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,4);
+//			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,5);
+//			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,6);
+		}
+
+		err->FlushAllFiles();
+
+////////////////////////////////////////////
+//shutdown the computer after the program ends
+		if (current_day==G_Simulated_Day_Number)  //end of last day
+		{
+			if (Shudown_After_Program_End==true)
+			{
+				FILE *f; 
+				errno_t err  = fopen_s( &f, "c:\\windows\\system32\\shutdown.exe", "r" );
+				if(err==0) system("c:\\windows\\system32\\shutdown.exe -s -t 120");  //after 60*5 sec
+			}
+		}
+
+	}
+
+
+
+
+
+/////////////////////////////////////////////	
+//day end warning.
+//		CString str1;
+//		CString str2;
+//		str1.Format("%d", current_day-1);
+//		str2.Format("%d", Not_Able_Finished_Commuter_Number);
+//		CString str= "Day " +str1+" ends, "+str2+" commuters can't finished trips";
+//		AfxMessageBox(str);
+
+
+
 }
  
-
 
 int CSimuFun::Get_XML_Controller(MSXML2::IXMLDOMDocumentPtr  pDOMDoc)
 {
@@ -1474,7 +1658,7 @@ int CSimuFun::Connect_Phase_And_Lane()
 							Phase= Get_Phase_in_Lane(Link_ID, cross_i, lane_i);
 							if (Phase!=NULL)
 							{
-								Lane_Array[Link_ID][lane_i]->Phase= Phase;
+								Link_Array[Link_ID]->Lanes[lane_i]->Phase= Phase;
 								Phase=NULL;
 							}
 						}
@@ -1489,7 +1673,7 @@ int CSimuFun::Connect_Phase_And_Lane()
 	{
 		for (lane_i=0; lane_i< MAX_LANE_NUMBER; lane_i++)
 		{
-			if (Lane_Array[link_i][lane_i]->Phase!=NULL)
+			if (Link_Array[link_i]->Lanes[lane_i]->Phase!=NULL)
 			{
 				return 1;
 			}
@@ -1511,15 +1695,15 @@ CPhase * CSimuFun::Get_Phase_in_Lane(int Link_ID, int Cross_ID, int Lane_ID)
 	//  limitation: a lane with two turning directions is not allowed
 	//*********************************************
 	//Get turning directions of the lane
-	if (Lane_Array[Link_ID][Lane_ID]->Left_Turn)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Left_Turn)
 	{
 		Direction= 0;
 	}
-	if (Lane_Array[Link_ID][Lane_ID]->Straight_Turn)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Straight_Turn)
 	{
 		Direction= 1;
 	}
-	if (Lane_Array[Link_ID][Lane_ID]->Right_Turn)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Right_Turn)
 	{
 		Direction= 2;
 	}
@@ -1539,7 +1723,6 @@ CPhase * CSimuFun::Get_Phase_in_Lane(int Link_ID, int Cross_ID, int Lane_ID)
 
 
 
-// 处理XML产生的偏差的函数，程序中的值是从0开始的，XML不一定
 //deal with the deviation between this program and XML; the sequence of this program is beginning with 0, but xml is with 1
 int CSimuFun::Deal_with_Deviation_XML(int Get_Value, int Deviation)
 {
@@ -1551,13 +1734,13 @@ int CSimuFun::Deal_with_Deviation_XML(int Get_Value, int Deviation)
 
 int CSimuFun::Get_Turn_Direction(int Link_ID, int Lane_ID)
 {
-	if (Lane_Array[Link_ID][Lane_ID]->Left_Turn==true)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Left_Turn==true)
 		return 0;
 	
-	if (Lane_Array[Link_ID][Lane_ID]->Straight_Turn==true)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Straight_Turn==true)
 		return 1;
 	
-	if (Lane_Array[Link_ID][Lane_ID]->Right_Turn==true)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Right_Turn==true)
 		return 2;
 	
 	return -1;
@@ -1882,8 +2065,8 @@ void CSimuFun::Set_All_Distance_Shortest_Path()
 		for (int j=0; j<G_Link_Number; j++)
 		{
 			if (i==j)
-				Shortest_Path_Array[i][j]=NULL;
-			Shortest_Path_Array[i][j]= Shortest_Path('D', i, j);
+				Distance_Shortest_Path_Array[i][j]=NULL;
+			Distance_Shortest_Path_Array[i][j]= Shortest_Path('D', i, j);
 		}
 }
 
@@ -1955,11 +2138,11 @@ void CSimuFun::Set_OD_On_Link()
 				The_Link->Add_Origin(An_Origin);
 			}
 			else if(The_Link->End_Object->Object_Type=='M')
-				The_Link->Dest=new CDest(The_Link->Object_ID , Lane_Array[i][0]->Cell_Number-1 );
+				The_Link->Dest=new CDest(The_Link->Object_ID , Link_Array[i]->Length_In_Cell-1 );
 			else
 			{
 				int Rightest_Lane_ID=The_Link->Lane_Number - 1;
-				int Number_Of_Cell= Lane_Array[The_Link->Object_ID][Rightest_Lane_ID]->Cell_Number;
+				int Number_Of_Cell= Link_Array[The_Link->Object_ID]->Lanes[Rightest_Lane_ID]->Cell_Number;
 				Located_Cell_ID= int(Number_Of_Cell/2);                     //middle of the link
 				CRanDestOrigin *An_Origin= new CRanDestOrigin(The_Link->Object_ID, Located_Cell_ID, -1);
 				The_Link->Add_Origin(An_Origin);
@@ -1983,7 +2166,7 @@ void CSimuFun::Set_OD_On_Link()
 		else
 		{
 			int Rightest_Lane_ID=Link_Array[Origin_Link_ID]->Lane_Number - 1;
-			int Number_Of_Cell= Lane_Array[Origin_Link_ID][Rightest_Lane_ID]->Cell_Number;
+			int Number_Of_Cell= Link_Array[Origin_Link_ID]->Lanes[Rightest_Lane_ID]->Cell_Number;
 			Located_Cell_ID= int(Number_Of_Cell/2);           
 		}
 		CFixDestOrigin *An_Origin= new CFixDestOrigin(Origin_Link_ID, Located_Cell_ID, Demand, Dest_Link_ID);
@@ -1993,11 +2176,11 @@ void CSimuFun::Set_OD_On_Link()
 		if (Link_Array[Dest_Link_ID]->Dest==NULL)
 		{
 			if (Link_Array[Dest_Link_ID]->End_Object->Object_Type=='M')
-				Located_Cell_ID= Lane_Array[Dest_Link_ID][0]->Cell_Number-1;
+				Located_Cell_ID= Link_Array[Dest_Link_ID]->Length_In_Cell-1;
 			else
 			{
 				int Rightest_Lane_ID=Link_Array[Origin_Link_ID]->Lane_Number - 1;
-				int Number_Of_Cell= Lane_Array[Origin_Link_ID][Rightest_Lane_ID]->Cell_Number;
+				int Number_Of_Cell= Link_Array[Origin_Link_ID]->Lanes[Rightest_Lane_ID]->Cell_Number;
 				Located_Cell_ID= int(Number_Of_Cell/2);           
 			}
 
@@ -2012,7 +2195,7 @@ void CSimuFun::Set_G2Detector()
 {
 	for(int link_i=0;link_i<G_Link_Number;link_i++)    //iterate every link
 		for(int lane_i=0;lane_i<Link_Array[link_i]->Lane_Number;lane_i++)                      //iterate lane
-			for(int cell_i=Lane_Array[link_i][lane_i]->Cell_Number;cell_i>=0;cell_i--)           //iterate cell  forward
+			for(int cell_i=Link_Array[link_i]->Lanes[lane_i]->Cell_Number;cell_i>=0;cell_i--)           //iterate cell  forward
 			{
 				if (
 					(link_i==47 && lane_i==2 && cell_i==95) 
@@ -2020,7 +2203,7 @@ void CSimuFun::Set_G2Detector()
 					)
 				{
 					CG2Detector *pG2Detector= new CG2Detector(link_i, lane_i, cell_i);
-					Lane_Array[link_i][lane_i]->Lane_Cell[cell_i]->pG2Detector = pG2Detector;
+					Link_Array[link_i]->Lanes[lane_i]->Lane_Cell[cell_i]->pG2Detector = pG2Detector;
 				}
 			}
 }
@@ -2036,18 +2219,23 @@ void CSimuFun::Update_On_Link_Data()
 		double Sum_Of_Speed=0;
 		double Avg_Speed= 0;
 
+		////////////////////////////////////////////////////////
+		//sum of speed
 		for (int j=0; j<Link_Array[i]->Lane_Number; j++)
-			for (int k=0; k<Lane_Array[i][j]->Cell_Number; k++)
-				if (true==Lane_Array[i][j]->Lane_Cell[k]->IsVehInCell())
+		{
+			for (int k=0; k<Link_Array[i]->Lanes[j]->Cell_Number; k++)
+				if (true==Link_Array[i]->Lanes[j]->Lane_Cell[k]->IsVehInCell())
 				{
 					On_Link_Veh_Number++;
-					Speed= Lane_Array[i][j]->Lane_Cell[k]->GetVehFromCell()->Cur_Spd;
+					Speed= Link_Array[i]->Lanes[j]->Lane_Cell[k]->GetVehFromCell()->Cur_Spd;
 					Sum_Of_Speed =Sum_Of_Speed + Speed;
 				}
+		}
 
 		Link_Array[i]->On_Link_Veh_Number=On_Link_Veh_Number;
 		Link_Array[i]->Sum_Of_Speed= Sum_Of_Speed;
 		
+		/////////////////////////////////////////////////////
 		CMainFrame *pMainFrame= (CMainFrame *)AfxGetApp()->m_pMainWnd;   
 		if (pMainFrame->Show_Time_Shortest_Path)
 			if (simu_time%BROADCASTING_FREQUENCY==0)    //updating time is coming and 
@@ -2056,7 +2244,7 @@ void CSimuFun::Update_On_Link_Data()
 				if (On_Link_Veh_Number<=FREE_FLOW_VEH_NUMBER)
 				{
 					Avg_Speed=Link_Array[i]->Limited_Speed;
-					Link_Array[i]->Current_On_Link_Time=int(Lane_Array[i][0]->Cell_Number*Pixel_Per_Cell/Avg_Speed);	
+					Link_Array[i]->Current_On_Link_Time=int(Link_Array[i]->Length_In_Cell*Pixel_Per_Cell/Avg_Speed);	
 				}
 				else if (Sum_Of_Speed==0)   // can't move, equal to a big number
 				{
@@ -2065,17 +2253,74 @@ void CSimuFun::Update_On_Link_Data()
 				else
 				{
 					Avg_Speed= Sum_Of_Speed/On_Link_Veh_Number;
-					Link_Array[i]->Current_On_Link_Time=int(Lane_Array[i][0]->Cell_Number*Pixel_Per_Cell/Avg_Speed);	
+					Link_Array[i]->Current_On_Link_Time=int(Link_Array[i]->Length_In_Cell*Pixel_Per_Cell/Avg_Speed);	
 				}
 			}
 	}
-	
+
+/*
 	// due to the broadcasting time, set information ready, otherwise false
 	if (simu_time%BROADCASTING_FREQUENCY==0)
 		if(false==simuFun->Information_Ready)
 			this->Information_Ready=true;
 	else
 		simuFun->Information_Ready=false;
-
+*/
 }
 
+
+
+void CSimuFun::Set_Commuter_On_Origin()
+{
+	int End_Link_ID = -1;
+	int Commuter_Number=0;
+
+	for (int link_i=0; link_i<G_Link_Number;link_i++)
+	{
+		CLink *The_Link= Link_Array[link_i];
+		if (The_Link!=NULL )
+			if(The_Link->Is_Origin==true)
+				for (int origin_i=0; origin_i<The_Link->Origin_Number; origin_i++)
+				{ 
+					COrigin * pOrigin= The_Link->Origin_Array[origin_i];
+					for (int commuter_i=0; commuter_i< pOrigin->Commuter_Number; commuter_i++)
+					{
+						Struct_Shortest_Path *spi;
+
+						////////////////////////////////////////////////////////////////////////////////////////////
+						// generate special commuters travel from 18 to 78
+						if (link_i==18 && origin_i==0 &&commuter_i<3)   //no type-3,4,5
+						{
+							End_Link_ID= 78;
+						
+							int Type= commuter_i +1;  
+							CCommuter *  pCommuter = new CCommuter(Commuter_Number, Type, link_i, End_Link_ID, G_Required_Arrival_Time);		//link_i is pOrigin->Located_Link_ID
+							
+							pOrigin->Commuter_Array[commuter_i]= pCommuter;
+							Commuter_Number++;
+						}
+						else
+						{
+							// at the beginning the destination of commuters are randomly assigned as the work place, and the home and work place will be fixed in the simulation
+							if (pOrigin->End_Link_ID==-1)    //CRanDestOrigin
+							{
+								//if intend to get an end link randomly, need to use Get_Veh_SPI() to get spi, and then get the end link from spi, because Get_Veh_SPI is able to check the link number on route.
+								spi= pOrigin->Get_Veh_SPI('D');   //shortest path is just for making sure there are routes between OD
+								End_Link_ID	= spi->End_Link_ID;
+							}
+							else    //CFixDestOrigin
+							{
+								End_Link_ID = pOrigin->End_Link_ID;
+							}
+						
+							//create a commuter
+							CCommuter *  pCommuter = new CCommuter(Commuter_Number, All_Commuters_Type, link_i, End_Link_ID, G_Required_Arrival_Time);		//link_i is pOrigin->Located_Link_ID
+							pOrigin->Commuter_Array[commuter_i]= pCommuter;
+							Commuter_Number++;
+						}
+						////////////////////////////////////////////////////////////////////////////////////////////
+					}
+				}
+	}
+
+}

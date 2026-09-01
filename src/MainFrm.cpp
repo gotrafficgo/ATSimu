@@ -13,6 +13,9 @@
 #include "DlgSetting.h"
 #include "DlgCarMovingModels.h"
 #include "Global.h"
+#include "Commuter.h"
+#include "Origin.h"
+#include "DlgDay2day.h"
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame
 
@@ -33,10 +36,13 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_PLOT_TRAJECTORY, OnUpdatePlotTrajectory)
 	ON_COMMAND(ID_YELLOW_INTERSECTION, OnStartYellowIntersection)
 	ON_UPDATE_COMMAND_UI(ID_YELLOW_INTERSECTION, OnUpdateStartYellowIntersection)
+	ON_COMMAND(ID_CONFLICT, OnStartConflict)
+	ON_UPDATE_COMMAND_UI(ID_CONFLICT, OnUpdateConflictBotton)
 	ON_COMMAND(ID_TIME_SHORTEST_PATH, OnTimeShortestPath)
 	ON_UPDATE_COMMAND_UI(ID_TIME_SHORTEST_PATH, OnUpdateTimeShortestPath)
 	ON_COMMAND(ID_SETTING, OnStartSetting)
 	ON_COMMAND(ID_CAR_MOVING_MODEL, OnStartCarMovingModel)
+	ON_COMMAND(ID_SET_DAY_TO_DAY, OnStartSetDayToDay)
 	ON_COMMAND(ID_DISPLAY_GRAPH, OnDisplayGraph)
 	ON_UPDATE_COMMAND_UI(ID_DISPLAY_GRAPH, OnUpdateDisplayGraph)
 	ON_UPDATE_COMMAND_UI(ID_SWITCH_GUIDANCE, OnUpdateSwitchGuidance)
@@ -75,14 +81,15 @@ CMainFrame::CMainFrame()
 	Show_GS_Statement_Flag=false;
 	Show_PlotMFD_Flag=false;
 	Show_Yellow_Intersection_Flag=true;
-	Show_Time_Shortest_Path=true;
+	Show_Conflict_Botton_Flag=true;
+	Show_Time_Shortest_Path=false;
 	Show_PlotTrajectory_Flag=false;
 
-	st_PointControlSwitch=false;          
+	st_PointControlSwitch=true;             //search "abc" for setting initial light state. for yellow at the beginning:  false  
 	st_RegionControlSwitch=false;
 
-	Switch_No_Control= true;
-	Switch_Point_Control= false;          
+	Switch_No_Control= false;     //search "abc" for setting initial light state. for yellow at the beginning:   true
+	Switch_Point_Control= true;    //search "abc" for setting initial light state. for yellow at the beginning:      false  
 	Switch_Region_Control= false;
 
 	pDlgShowControl=NULL;
@@ -257,14 +264,14 @@ void CMainFrame::OnSwitchPointControl()
 		Switch_Region_Control=false;
 		Switch_No_Control= false;
 		Current_Control_Type= Get_Current_Control_Type();
-		simuFun->Set_Controller_State(Current_Control_Type, simu_time+1);  
+//		simuFun->Set_Controller_State(Current_Control_Type, simu_time+1);  
 	} 
 	else  //point control: grow out of nothing
 	{
 		Switch_Region_Control=false;
 		Switch_No_Control= true;
 		Current_Control_Type= Get_Current_Control_Type();
-		simuFun->Set_Controller_State(Current_Control_Type,simu_time+1);
+//		simuFun->Set_Controller_State(Current_Control_Type,simu_time+1);
 	}
 }
 
@@ -274,7 +281,6 @@ void CMainFrame::OnSwitchRegionControl()
 		return;
 
 	///////////////////////////////
-	st_PointControlSwitch=false;
 	st_RegionControlSwitch=!st_RegionControlSwitch;
 	///////////////////////////////
 
@@ -459,11 +465,16 @@ void CMainFrame::OnUpdatePlotTrajectory(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(Show_PlotTrajectory_Flag);
 }
 
-
 void CMainFrame::OnUpdateStartYellowIntersection(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(Show_Yellow_Intersection_Flag);
 }
+
+void CMainFrame::OnUpdateConflictBotton(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(Show_Conflict_Botton_Flag);
+}
+
 void CMainFrame::OnUpdateTimeShortestPath(CCmdUI *pCmdUI)
 {
 	pCmdUI->SetCheck(Show_Time_Shortest_Path);
@@ -525,50 +536,106 @@ void CMainFrame::OnStartCarMovingModel()
 	pDlgCarMovingModels->ShowWindow(SW_SHOW);
 }
 
+
+void CMainFrame::OnStartSetDayToDay()
+{
+	
+	if (Open_File_PathName!="N")
+	{
+		AfxMessageBox("The setting can't be changed after the network is loaded");
+		return;
+	}
+	
+
+	CDlgDay2day *pDlgDay2day=new CDlgDay2day();
+	pDlgDay2day->Create(IDD_SET_DAY_TO_DAY);
+	pDlgDay2day->ShowWindow(SW_SHOW);
+}
+
+
 void CMainFrame::OnStartYellowIntersection()
 {
+	if (!Check_Load_or_Not())
+		return;
+
 	Show_Yellow_Intersection_Flag=!Show_Yellow_Intersection_Flag;
 	Yellow_Intersection=!Yellow_Intersection;
+}
+
+void CMainFrame::OnStartConflict()
+{
+	if (!Check_Load_or_Not())
+		return;
+
+	Show_Conflict_Botton_Flag=!Show_Conflict_Botton_Flag;
+	Conflict_Flag=!Conflict_Flag;
 }
 
 void CMainFrame::OnTimeShortestPath()
 {
 	Show_Time_Shortest_Path=!Show_Time_Shortest_Path;
-	//when time shortest path is closed, information is not ready, but if shorest path is open, which doesn't mean information is ready
+
+/*
+	//when time shortest path is closed, information is not ready, but if shortest path is chosen, which doesn't mean information is ready
 	extern CSimuFun *simuFun;
 	if (Show_Time_Shortest_Path==false)
 		simuFun->Information_Ready=false;
+*/
 }
+
 
 
 
 void CMainFrame::OnClose()
 {
-
-	//record MFD, if one wants to record MFD, uncomment it	
-	double k, q;
-	CString str;
-	for (int i=0; i<pSampleCollection->AKQ.GetSize(); i++)
+	if (simu_time!=Total_Simulation_Time-1)
 	{
-		k=pSampleCollection->AKQ.GetAt(i)->k;
-		str.Format("%f", k);
-		err->LogStrData("MFD.csv", str);
+		//record MFD, if one wants to record MFD, uncomment it	
+		if (Output_MFD)
+		{
+			pSampleCollection->Record_MFD();
+			pSampleCollection->Empty_MFD_Record();
+		}
 
-		err->LogStrData("MFD.csv", ",");
+		if (Output_DepartureArrivalRate)
+		{
+			pSampleCollection->Record_Departure_Arrival_Rate();
+			pSampleCollection->Empty_MFD_Record();
+		}
+		
+		if (Output_SpatialDistribution)
+		{
+			pSampleCollection->Record_Spatial_Distribution();
+			pSampleCollection->Empty_SSD_Record();
+		}
 
-		q=pSampleCollection->AKQ.GetAt(i)->q;
-		str.Format("%f", q);
-		err->LogStrData("MFD.csv", str);
+		//record evolution of one commuter's route choices
+		//NOTE: the first line (day 0) is the fftt of links
+		if (Output_RouteChoice)
+		{
+			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,0);
+			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,1);
+			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,2);
+//			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,3);
+//			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,5);
+//			pSampleCollection->Record_Commuter_Choices(current_day, 18,0,6);
+		}
 
-		err->LogStrData("MFD.csv", '\n');
+//		err->FlushAllFiles();
+
 	}
 
-
-	err->CloseAllFiles();
-
-	communicator->Clean_Socket();
 	Switch_Thread=false;	
+	Sleep(1000);
 
-
+	//close
+	err->CloseAllFiles();
+	pSampleCollection=NULL;
+	communicator->Clean_Socket();
 	CFrameWnd::OnClose();
+
 }
+
+
+
+

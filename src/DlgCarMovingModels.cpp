@@ -39,6 +39,7 @@ void CDlgCarMovingModels::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgCarMovingModels, CDialog)
 	ON_BN_CLICKED(IDOK, &CDlgCarMovingModels::OnBnClickedOk)
+	ON_BN_CLICKED(IDCANCEL, &CDlgCarMovingModels::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
 
@@ -139,4 +140,10 @@ void CDlgCarMovingModels::OnBnClickedOk()
 	Car_Moving_Model_Type= BnID_To_CMChar(m_Car_Moving_Model);
 	Reset_Cell_Length(Car_Moving_Model_Type);
 	OnOK();
+}
+
+void CDlgCarMovingModels::OnBnClickedCancel()
+{
+	// TODO: Add your control notification handler code here
+	OnCancel();
 }

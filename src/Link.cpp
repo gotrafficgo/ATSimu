@@ -16,9 +16,7 @@
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-CLink::CLink()
-{
-}
+
 
 CLink::CLink(CMyObject *start, CMyObject *end)
 {
@@ -50,8 +48,6 @@ CLink::CLink(CMyObject *start, CMyObject *end)
 	this->On_Link_Veh_Number=0;
 	this->Sum_Of_Speed=0;
 
-	Current_On_Link_Time=0;
-
 	Is_Origin=false;
 	Is_Dest=false;
 	Limited_Speed=0;
@@ -60,6 +56,10 @@ CLink::CLink(CMyObject *start, CMyObject *end)
 		this->Origin_Array[i]=NULL;
 	Origin_Number=0;
 	this->Dest=NULL;
+
+	for(int i=0;i<MAX_LANE_NUMBER;i++)
+		Lanes[i] = new CLane();
+
 }
 CLink::~CLink()
 {

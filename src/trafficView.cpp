@@ -1,3 +1,10 @@
+ID_PLOT_MFD
+ID_PLOT_TRAJECTORY
+ID_TIME_SHORTEST_PATH
+ID_CONFLICT
+ID_YELLOW_INTERSECTION
+ID_SETTING
+ID_CAR_MOVING_MODEL
 
 #include "stdafx.h"
 #include "traffic.h"
@@ -142,9 +149,8 @@ CTrafficDoc* CTrafficView::GetDocument() // non-debug version is inline
 
 LRESULT CTrafficView::OnDispView(WPARAM wParam, LPARAM Paint_Purpose)
 {
-
 	//stop the program at a specific time
-	if (simu_time==Total_Simulation_Time)     //end time of simulation
+	if (simu_time==Total_Simulation_Time-1)     //end time of simulation  Total_Simulation_Time
 	{
 		CMainFrame *pMain= (CMainFrame *)AfxGetApp()->m_pMainWnd;  
 		pMain->OnClose();
@@ -221,7 +227,7 @@ bool CTrafficView::Init_Network()
 	simuFun->OnInit_Object();     //Get simu information from XML file
 	simuFun->Enlarge_Link();
 	simuFun->Set_Object_Relation(); 
-	simuFun->CCwise_Sort_Link();                  
+	simuFun->CCwise_Sort_Link(); 
 	simuFun->Set_Next_Link();
 	simuFun->Set_Cross_Edge_Point();
 	simuFun->Set_Lane_Middle_Line();
@@ -233,8 +239,10 @@ bool CTrafficView::Init_Network()
 	simuFun->Set_Conflict_Area();
 	simuFun->Set_Straight_Conflict();
 	simuFun->Connect_Controller_and_Detector();
+	simuFun->Set_Controller_State(Current_Control_Type, simu_time+1);  
 	simuFun->Set_OD_On_Link();
-	simuFun->Set_G2Detector();
+	simuFun->Set_G2Detector();  
+	simuFun->Set_Commuter_On_Origin();
 	return true;
 }
 
@@ -472,11 +480,15 @@ UINT ThreadProc(LPVOID param)
 			// 			if(Switch_Detector && Current_Control_Type!='N')
 			// 				communicator->Send_Simu_Time();
 
+			current_day= int(simu_time/G_Day_Length) + 1;   //should be prior to 	"simuFun->Simu_Go_A_Step()"
+			time_in_current_day= simu_time - (current_day-1)*G_Day_Length;
+			
 			simuFun->Simu_Go_A_Step();                               //simulation go a step
 
 			::SendMessage(hWnd, WM_DISPVIEW, 0, 0);    //draw 
 
 			simu_time++;
+
 
 // 			//pause the program at a specific time 
 // 			if (simu_time==Total_Simulation_Time)
@@ -489,8 +501,9 @@ UINT ThreadProc(LPVOID param)
 			::Sleep(Sleep_Time);    
 
 		} 
-		Sleep(1);
+//		Sleep(1);
 	}
+
 //	AfxEndThread(0);
 
 	delete simuFun;
@@ -576,8 +589,11 @@ void CTrafficView::Update_Dialog_Data()
 	{
 		if(pMain->pPlotMFD!=NULL)
 		{
-			pMain->pPlotMFD->OnPaint();
-			pMain->pPlotMFD->Invalidate();
+			if (simu_time%TIME_INTERVAL_DRAW_MFD==0)    //every 5 sec, draw a spot on MFD
+			{
+				pMain->pPlotMFD->OnPaint();
+				pMain->pPlotMFD->Invalidate();
+			}
 		}
 	}
 }
@@ -593,9 +609,7 @@ BOOL CTrafficView::OnEraseBkgnd(CDC* pDC)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////    A Trafic Simulation Program     /////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-////    Developed by        Zhengbing He, Jorge A Laval, Shoufeng Ma
-////                                  Tianjin University, China
-//// 		       						Georgia Institute of Technology, U.S.
+////    Developed by        Zhengbing He
 ////    Contact                he.zb@hotmail.com
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////

@@ -21,7 +21,7 @@ CG2Detector::CG2Detector(int Link_ID, int Lane_ID, int Cell_ID)
 	---------------------------------------------
 	*/
 	for (int i=0; i<SCAN_REGION; i++)
-		Scan_Region[i]=Lane_Array[Located_Link_ID][Located_Lane_ID]->Lane_Cell[Located_Cell_ID - i];
+		Scan_Region[i]=Link_Array[Located_Link_ID]->Lanes[Located_Lane_ID]->Lane_Cell[Located_Cell_ID - i];
 	
 	for (int i=0; i<SCAN_REGION;i++)
 	{
@@ -44,12 +44,13 @@ CG2Detector::CG2Detector(int Link_ID, int Lane_ID, int Cell_ID)
 	Detector_ID=strLink+"."+strLane+"."+strCell;
 
 	//convert from CString to char*
-	CString str;
-	str="G2Detector(" + Detector_ID + ").csv";
-	int Length= str.GetLength()+1;
-	Data_File_Name=new char[Length];
-	strncpy_s(Data_File_Name, Length, str, Length);
+	CString str="G2Detector(" + Detector_ID + ").csv";
+	this->Data_File_Name= CStringToCharStar(str);
+
 }
+
+
+
 
 
 void CG2Detector::Collect_Data()
@@ -92,9 +93,10 @@ void CG2Detector::Run()
 	for (int i=0; i<SCAN_REGION;i++)
 		Veh_In_Scan_Last_Time[i]=Veh_In_Scan_This_Time[i];
 	Collect_Data();
-
-	if(true==Record_Data())
-		Clear_Data();
+	
+	if (Output_DetectorData)
+		if(true==Record_Data())
+			Clear_Data();
 
 	Clear_Memory();
 

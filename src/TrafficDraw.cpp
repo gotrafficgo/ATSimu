@@ -29,11 +29,14 @@ CTrafficDraw::CTrafficDraw(CDC *pDC)
 	brush_for_veh_black.CreateSolidBrush(COLOR_BLACK);
 	brush_for_veh_green.CreateSolidBrush(COLOR_GREEN_VEH);
 	brush_for_veh_blue.CreateSolidBrush(COLOR_BLUE_VEH);
+	brush_for_veh_yellow.CreateSolidBrush(COLOR_YELLOW);
+
 	pen_for_veh_red.CreatePen(PS_SOLID,1, COLOR_RED_VEH);
 	pen_for_veh_white.CreatePen(PS_SOLID,1, COLOR_WHITE);
 	pen_for_veh_black.CreatePen(PS_SOLID,1,COLOR_BLACK);
 	pen_for_veh_green.CreatePen(PS_SOLID,1, COLOR_GREEN_VEH);
 	pen_for_veh_blue.CreatePen(PS_SOLID,1, COLOR_BLUE_VEH);
+	pen_for_veh_yellow.CreatePen(PS_SOLID,1,COLOR_YELLOW);
 
 	brush_for_guidance_board.CreateSolidBrush(COLOR_GREEN);
 	pen_for_guidance_board.CreatePen(PS_SOLID,1, COLOR_GREEN);
@@ -233,11 +236,11 @@ void CTrafficDraw::Draw_Veh_On_Link(int Link_ID)
 // {
 // }
 // else
-		for(w=0;w<Lane_Array[Link_ID][j]->Cell_Number;w++)
+		for(w=0;w<Link_Array[Link_ID]->Lanes[j]->Cell_Number;w++)
 		{
-			if(Lane_Array[Link_ID][j]->Lane_Cell[w]->IsVehInCell()==true)
+			if(Link_Array[Link_ID]->Lanes[j]->Lane_Cell[w]->IsVehInCell()==true)
 			{	
-				pVeh=Lane_Array[Link_ID][j]->Lane_Cell[w]->GetVehFromCell();
+				pVeh=Link_Array[Link_ID]->Lanes[j]->Lane_Cell[w]->GetVehFromCell();
 				if(pVeh!=NULL)
 				{
 					switch (pVeh->Veh_Color)
@@ -262,9 +265,13 @@ void CTrafficDraw::Draw_Veh_On_Link(int Link_ID)
 						oldPen= pDC->SelectObject(&pen_for_veh_blue);
 						oldBrush= pDC->SelectObject(&brush_for_veh_blue);
 						break;
+					case 'Y':
+						oldPen= pDC->SelectObject(&pen_for_veh_yellow);
+						oldBrush= pDC->SelectObject(&brush_for_veh_yellow);
+						break;
 					}
-					x = (int)(Lane_Array[Link_ID][j]->Lane_Cell[w]->Cell_Center->x);
-					y = (int)(Lane_Array[Link_ID][j]->Lane_Cell[w]->Cell_Center->y);
+					x = (int)(Link_Array[Link_ID]->Lanes[j]->Lane_Cell[w]->Cell_Center->x);
+					y = (int)(Link_Array[Link_ID]->Lanes[j]->Lane_Cell[w]->Cell_Center->y);
 
 					x= Get_New_Coordinate(x, 'x');
 					y= Get_New_Coordinate(y, 'y');
@@ -278,8 +285,8 @@ void CTrafficDraw::Draw_Veh_On_Link(int Link_ID)
 // 				else
 // 				{
 // 					pDC->SelectObject(&brush_for_blank);
-// 					x = (int)(Lane_Array[i][j]->Lane_Cell[w]->Cell_Center->x);
-// 					y = (int)(Lane_Array[i][j]->Lane_Cell[w]->Cell_Center->y);
+// 					x = (int)(Link_Array[i]->Lanes[j]->Lane_Cell[w]->Cell_Center->x);
+// 					y = (int)(Link_Array[i]->Lanes[j]->Lane_Cell[w]->Cell_Center->y);
 // 					
 // 					x= Get_New_Coordinate(x, 'x');
 // 					y= Get_New_Coordinate(y, 'y');
@@ -388,9 +395,9 @@ void CTrafficDraw::Draw_Traffic_Light(int Link_ID)
 	{	
 		for(j=0;j<Link_Array[Link_ID]->Lane_Number;j++)
 		{
-			int Last_Cell= Lane_Array[Link_ID][j]->Cell_Number - 1;
-			x = (int)(Lane_Array[Link_ID][j]->Lane_Cell[Last_Cell]->Cell_Center->x);
-			y = (int)(Lane_Array[Link_ID][j]->Lane_Cell[Last_Cell]->Cell_Center->y);		
+			int Last_Cell= Link_Array[Link_ID]->Lanes[j]->Cell_Number - 1;
+			x = (int)(Link_Array[Link_ID]->Lanes[j]->Lane_Cell[Last_Cell]->Cell_Center->x);
+			y = (int)(Link_Array[Link_ID]->Lanes[j]->Lane_Cell[Last_Cell]->Cell_Center->y);		
 			x= Get_New_Coordinate(x, 'x');
 			y= Get_New_Coordinate(y, 'y');
 
@@ -408,9 +415,9 @@ void CTrafficDraw::Draw_Traffic_Light(int Link_ID)
 				}
 			}
 			else
-				if (Lane_Array[Link_ID][j]->Phase!=NULL )   //control
+				if (Link_Array[Link_ID]->Lanes[j]->Phase!=NULL )   //control
 				{
-					char Current_Color = Lane_Array[Link_ID][j]->Phase->Get_Current_Color();
+					char Current_Color = Link_Array[Link_ID]->Lanes[j]->Phase->Get_Current_Color();
 					if (Current_Color=='R' )
 					{
 						oldPen= pDC->SelectObject(&pen_for_red_light);

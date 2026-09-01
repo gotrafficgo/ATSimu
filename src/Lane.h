@@ -10,7 +10,7 @@ class CLane
 public:
 	CLane();
 	virtual ~CLane();
-	void Set_Value(Cpoint, Cpoint);	
+	int Set_Value(Cpoint, Cpoint);	  //return cell number of this lane
 	int Set_Lane_Cell(Cpoint , Cpoint );
 
 public: 
@@ -22,5 +22,6 @@ public:
 	bool Right_Turn;                                            //true or false
 	int Prohibit_Change_Lane_Cell_ID;  
 	CPhase *Phase;                                                //phase is on a lane; i.e., a lane contain a phase
+	int Free_Flow_Travel_Time;
 
 };

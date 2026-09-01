@@ -24,8 +24,15 @@ ErrorLog::~ErrorLog()
 
 void ErrorLog::CloseAllFiles()
 {
-		for (int i=0; i<FileNameSum; i++)
+	for (int i=0; i<FileNameSum; i++)
+		if (FileArray[i]!=NULL)
 			fclose(FileArray[i]);
+}
+
+void ErrorLog::FlushAllFiles()
+{
+	for (int i=0; i<FileNameSum; i++)
+		fflush(FileArray[i]);
 }
 
 FILE* ErrorLog::OpenedFile(CString FileName)
@@ -56,7 +63,9 @@ void ErrorLog::Log(char * FileName, char* info)
 	file=OpenedFile(strFilePathAndName);
 	if (file==NULL)
 	{
-		err = fopen_s(&file,  FilePathAndName,  "a");   
+		//"a"  Opens for writing at the end of the file (appending) without removing the EOF marker before writing new data to the file; creates the file first if it doesn't exist.
+		// for more, see  http://msdn.microsoft.com/en-us/library/z5hh6ee9(v=vs.80).aspx
+		err = fopen_s(&file,  FilePathAndName,  "a");    
 
 		FileArray[FileNameSum]=file;
 		FileNameArray[FileNameSum]=strFilePathAndName;

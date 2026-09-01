@@ -14,11 +14,11 @@ struct Add_Decrease_Speed
 
 class COrigin;
 class CDest;
+class CLane;
 
 class CLink : public CMyObject  
 {
 public:
-	CLink();
 	CLink(CMyObject *, CMyObject *);
 	virtual ~CLink();
 	int Get_Quad(Cpoint Start_Point, Cpoint End_Point);
@@ -48,7 +48,7 @@ public:
 	CDlgGuidanceBoard * dlgGuidanceBoard;       //dlg shown when double click guidance board
 	bool isShowGuidanceBoard;
 	int Lane_Number; 
-	int Limited_Speed;
+	int Limited_Speed;      //unit is cell number
 	int Next_Left_Link;            //next link id, if turn left on this link
 	int Next_Straight_Link;
 	int Next_Right_Link;
@@ -64,6 +64,10 @@ public:
 	int Current_On_Link_Time;          // real on-link time for guidance information
 	bool Is_Dest;
 	bool Is_Origin;
+	
+	CLane * Lanes[MAX_LANE_NUMBER];
+	int Length_In_Cell;   //cell number
+	int Length_In_FFTT;  // free flow travel time on links + waiting time for intersection(=cycle time/ phase number) ; being evaluated in CSimuFun::Set_Lane_Cell_Coordinate()
 	
 };
 

@@ -8,6 +8,8 @@
 #include "Conflict_Area.h"
 #include "structure.h"
 
+class CDriver;
+
 class CVeh  
 {
 public:
@@ -39,25 +41,30 @@ public:
 	int Last_Cell_Loc;
 	bool Freshman;    //symbol for if it has been recorded by trajectory.
 
+	CDriver * The_Driver;
+
 	CArray <Loc_And_Time*, Loc_And_Time*> Trajectory;
 
 public:
-	CVeh(int Veh_ID,int Veh_Type,  int Start_Cell_ID, int Start_Link_ID, int End_Link_ID,Struct_Shortest_Path* Shortest_Route_Path);
+	CVeh(int Veh_ID,int Veh_Type,  int Start_Cell_ID, CDriver * The_Driver);
+//	CVeh(int Veh_ID, int Veh_Type, int Start_Cell_ID, int Start_Link_ID, int End_Link_ID, Struct_Shortest_Path * spi);
 	virtual ~CVeh();
 	void Veh_On_Link(int Cross_id,int Link_ID, int Lane_ID, int Cell_ID);
 	void Drive_on_Dest_Lane(int Link_ID, int Lane_ID, int Cell_ID);
 	void Drive_not_on_Dest_Lane(int Link_ID, int Lane_ID, int Cell_ID);
 	int Follow_Guidance_or_Not(int Link_ID);
-	bool Change_Route(int Current_Link_ID,int Next_Link );
+	bool Change_Route(char Type, int Current_Link_ID, int Next_Link);  //'T'-tsp, 'D'-dsp
 	bool Change_Dest(int Current_Link_ID, int Next_Link);     //after a long time waiting, change destination
 	void Enter_Cross(int Link_ID,int Lane_ID, int Cell_ID,int Cross_Lane_ID);
 	void Veh_Run_on_Link(int Start_Link_ID, int Start_Lane_ID,int Start_Cell_ID,int End_Link_ID, int End_Lane_ID, int End_Cell_ID, double New_Speed);
 	CVeh* Get_Front_Veh_on_Link(int Link_ID, int Lane_ID, int Cell_ID, int Last_Cell_ID);
 	int Distance_Between_Front_Veh(int Link_ID, int Lane_ID, int Cell_ID);
-	Struct_Shortest_Path* ShortestPath_with_Guidance(int Next_Link);
+	Struct_Shortest_Path* ShortestPath_with_Guidance(char Type, int Next_Link);
 	CVeh * Delete_Current_Link_Cell_Veh(int Link_ID, int Current_Lane_ID, int Current_Cell_Position);
+	CVeh * Delete_Current_Intersection_Cell_Veh(int Cross_ID,int Cross_Lane_ID, int Cell_ID);
 	CVeh *Delete_Current_Cross_Cell_Veh(int Cross_id,int Cross_Lane_ID, int Cell_ID);
 	int Change_Lane(int Link_ID, int Lane_ID, int Cell_ID, int Cur_Location, double Cur_Speed);
+//	bool Have_Space_In_Target_Lane(int Link_ID, int Lane_ID, int Cell_ID);
 	int Get_Lane_Number_to_Dest_Lane(int Current_Lane_ID);
 	int Get_Nearest_Dest_Lane_ID( int Current_Lane_ID);
 	bool Decide_Change_Lane(int Cell_ID);
@@ -86,9 +93,11 @@ public:
 	int Choose_in_Dest_Lanes(int Link_ID, int Lane_ID, int End_Cell_ID);
 	double Set_Max_Speed_Percent();
 	int Set_Init_Speed(int Start_Cell_ID);
-	bool Leave_Net_Or_Not(int Link_ID, int Lane_ID, int Start_Cell_ID,  int End_Cell_ID);
+	bool Leave_Network_Or_Not(int Link_ID, int Lane_ID, int Start_Cell_ID,  int End_Cell_ID);
+	void Leave_Network_From_Link(int Link_ID, int Lane_ID, int Cell_ID);
+	void Leave_Network_From_Intersection(int Cross_ID, int Cross_Lane_ID, int Cell_ID);
 	bool Able_To_Enter_Cross(int Link_ID, int Lane_ID, int Cell_ID, int Supposed_End_Cell_ID);
-	void Set_Veh_Color();
+	void  Set_Veh_Color();
 	void Update_Loc_And_Spd(CVeh *p, int New_Link_ID, int New_Lane_ID, int New_Cell_ID, double New_Speed);
 	void Update_Loc_And_Spd(CVeh *p, double New_Speed);   //used in intersection
 	int Get_Wait_Cell_ID(int Link_ID, int Lane_ID);
@@ -104,6 +113,6 @@ public:
 	void Set_On_Link_Max_Speed(int Link_ID);
 	double Get_Cur_Speed(int Veh_Loc, double Veh_Spd, int FrontVeh_Loc, double FrontVeh_Spd, double Max_Speed);
 	int Get_Cur_Location(int Cur_Loc, double Cur_Spd);
-	bool Have_Space_In_Target_Lane(int Link_ID, int Lane_ID, int Cell_ID);
+
 };
 

@@ -18,7 +18,7 @@ CPlotMFD::CPlotMFD(CWnd* pParent /*=NULL*/)
 {
 	maxX=60;
 	minX=0;
-	maxY=60;
+	maxY=200;   //60
 	minY=0;
 
 	width=500;
@@ -71,7 +71,7 @@ void CPlotMFD::OnPaint()
 
 	CBitmap* m_pBitmap   = new CBitmap;  
 	CBitmap* pOldBitmap = pDC->SelectObject(m_pBitmap);         
-	CBrush backgroundBrush= COLOR_WHITE;   //修改背景色时，还要添加WM_ERASEBKGND消息及其响应函数
+	CBrush backgroundBrush= COLOR_WHITE; 
 	CBrush* pOldBrush = pDC->SelectObject(&backgroundBrush);
 	pDC->PatBlt(0,0,width+100,height+100, PATCOPY);
 	PaintXYAxis(pDC);
@@ -85,22 +85,36 @@ void CPlotMFD::OnPaint()
 void CPlotMFD::PaintData(CDC *pDC)
 {
 	extern CSampleCollection *pSampleCollection;	
+	extern int current_day;
 	double k,q;
-	CPen aPen;
-	aPen.CreatePen(PS_SOLID,1, COLOR_RED);
-	CPen *oldPen= pDC->SelectObject(&aPen);
+
+	CPen rPen;
+	rPen.CreatePen(PS_SOLID,1, COLOR_RED);
+
+	CPen bPen;
+	bPen.CreatePen(PS_SOLID,1, COLOR_BLUE);
+	CPen *oldPen;
 
 	int AKQ_Size=pSampleCollection->AKQ.GetSize();
 	for (int i=0; i<AKQ_Size; i++)
 	{
+		int x= i/G_Day_Length;
+
+		if (x%2==0)
+			oldPen= pDC->SelectObject(&bPen);
+		else 
+			oldPen= pDC->SelectObject(&rPen);
+
 		k=pSampleCollection->AKQ.GetAt(i)->k;
 		q=pSampleCollection->AKQ.GetAt(i)->q;
 		k= Coordinate_Trans_X(k);
 		q= Coordinate_Trans_Y(q);
 		pDC->Ellipse(int(k),int(q),int(k+3),int(q+3));	
+
+		pDC->SelectObject(&oldPen);
+
 	}
 
-	pDC->SelectObject(&oldPen);
 	CDialog::OnPaint();
 }
 
@@ -163,7 +177,7 @@ void CPlotMFD::PaintXYAxis(CDC *pDC)
 void CPlotMFD::OnClose()
 {
 	CMainFrame *pMainFrame= (CMainFrame *)AfxGetApp()->m_pMainWnd;   
-	pMainFrame->Show_PlotMFD_Flag=false;          //可以把Show_Control_View_Flag放在这个CDialog类中，在CMainFram中判断。
+	pMainFrame->Show_PlotMFD_Flag=false;      
 	CDialog::OnClose();
 }
 

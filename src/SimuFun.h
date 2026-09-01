@@ -14,7 +14,7 @@ class CSimuFun
 public:
 	CSimuFun();
 	virtual ~CSimuFun();
-	bool Information_Ready;
+//	bool Information_Ready;
 public:
 	int Get_XML_MarginalPoint(MSXML2::IXMLDOMDocumentPtr  pDOMDoc );
 	int Get_XML_Cross(MSXML2::IXMLDOMDocumentPtr  pDOMDoc);
@@ -54,6 +54,8 @@ public:
 	void Set_OD_On_Link();
 	void Set_G2Detector();
 	void Update_On_Link_Data();
+	void Set_Commuter_On_Origin();
+
 };
 
 

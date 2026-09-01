@@ -438,7 +438,7 @@ int CController::Get_Veh_Sum(int Link_ID, int Lane_ID, int Smaller_Cell_ID, int 
 
 	for (int i=Bigger_Cell_ID; i> Smaller_Cell_ID; i--)
 	{
-		if(Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
+		if( Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
 		{
 			theSum++;
 		}
@@ -516,15 +516,15 @@ void CController::Calculate_Lane_Update_Data()
 
 		if (Link_Array[Link_ID]->Lane_Number==4) 
 		{
-			Queue_Length_0_for_Control= Get_Veh_Sum(Link_ID, 0, Lane_Array[Link_ID][0]->Cell_Number-1-29, Lane_Array[Link_ID][0]->Cell_Number-1);
-			Queue_Length_1_for_Control= Get_Veh_Sum(Link_ID, 1, Lane_Array[Link_ID][1]->Cell_Number-1-29, Lane_Array[Link_ID][1]->Cell_Number-1)
-									  + Get_Veh_Sum(Link_ID, 2, Lane_Array[Link_ID][2]->Cell_Number-1-29, Lane_Array[Link_ID][2]->Cell_Number-1);
-			Queue_Length_2_for_Control= Get_Veh_Sum(Link_ID, 3, Lane_Array[Link_ID][3]->Cell_Number-1-29, Lane_Array[Link_ID][3]->Cell_Number-1);
+			Queue_Length_0_for_Control= Get_Veh_Sum(Link_ID, 0, Link_Array[Link_ID]->Lanes[0]->Cell_Number-1-29, Link_Array[Link_ID]->Lanes[0]->Cell_Number-1);
+			Queue_Length_1_for_Control= Get_Veh_Sum(Link_ID, 1, Link_Array[Link_ID]->Lanes[1]->Cell_Number-1-29, Link_Array[Link_ID]->Lanes[1]->Cell_Number-1)
+									                  + Get_Veh_Sum(Link_ID, 2, Link_Array[Link_ID]->Lanes[2]->Cell_Number-1-29, Link_Array[Link_ID]->Lanes[2]->Cell_Number-1);
+			Queue_Length_2_for_Control= Get_Veh_Sum(Link_ID, 3, Link_Array[Link_ID]->Lanes[3]->Cell_Number-1-29, Link_Array[Link_ID]->Lanes[3]->Cell_Number-1);
 
-			Queue_Length_0_for_Guidance=  Get_Veh_Sum(Link_ID, 0, 0, Lane_Array[Link_ID][0]->Cell_Number-1);  
-			Queue_Length_1_for_Guidance=  Get_Veh_Sum(Link_ID, 1, 0, Lane_Array[Link_ID][1]->Cell_Number-1)
-								                                  +  Get_Veh_Sum(Link_ID, 2, 0, Lane_Array[Link_ID][2]->Cell_Number-1);
-			Queue_Length_2_for_Guidance=  Get_Veh_Sum(Link_ID, 3, 0, Lane_Array[Link_ID][3]->Cell_Number-1);    
+			Queue_Length_0_for_Guidance=  Get_Veh_Sum(Link_ID, 0, 0, Link_Array[Link_ID]->Lanes[0]->Cell_Number-1);  
+			Queue_Length_1_for_Guidance=  Get_Veh_Sum(Link_ID, 1, 0, Link_Array[Link_ID]->Lanes[1]->Cell_Number-1)
+								                         +  Get_Veh_Sum(Link_ID, 2, 0, Link_Array[Link_ID]->Lanes[2]->Cell_Number-1);
+			Queue_Length_2_for_Guidance=  Get_Veh_Sum(Link_ID, 3, 0, Link_Array[Link_ID]->Lanes[3]->Cell_Number-1);    
 
 			int Delay_Time_1= Get_Delay_Time(Link_ID, 1);
 			int Delay_Time_2= Get_Delay_Time(Link_ID, 2);
@@ -535,13 +535,13 @@ void CController::Calculate_Lane_Update_Data()
 		}
 		else
 		{
-			Queue_Length_0_for_Control= Get_Veh_Sum(Link_ID, 0, Lane_Array[Link_ID][0]->Cell_Number-1-29, Lane_Array[Link_ID][0]->Cell_Number-1);
-			Queue_Length_1_for_Control= Get_Veh_Sum(Link_ID, 1, Lane_Array[Link_ID][1]->Cell_Number-1-29, Lane_Array[Link_ID][1]->Cell_Number-1);
-			Queue_Length_2_for_Control= Get_Veh_Sum(Link_ID, 2, Lane_Array[Link_ID][2]->Cell_Number-1-29, Lane_Array[Link_ID][2]->Cell_Number-1);			
+			Queue_Length_0_for_Control= Get_Veh_Sum(Link_ID, 0, Link_Array[Link_ID]->Lanes[0]->Cell_Number-1-29, Link_Array[Link_ID]->Lanes[0]->Cell_Number-1);
+			Queue_Length_1_for_Control= Get_Veh_Sum(Link_ID, 1, Link_Array[Link_ID]->Lanes[1]->Cell_Number-1-29, Link_Array[Link_ID]->Lanes[1]->Cell_Number-1);
+			Queue_Length_2_for_Control= Get_Veh_Sum(Link_ID, 2, Link_Array[Link_ID]->Lanes[2]->Cell_Number-1-29, Link_Array[Link_ID]->Lanes[2]->Cell_Number-1);			
 
-			Queue_Length_0_for_Guidance=  Get_Veh_Sum(Link_ID, 0, 0, Lane_Array[Link_ID][0]->Cell_Number-1);  
-			Queue_Length_1_for_Guidance=  Get_Veh_Sum(Link_ID, 1, 0, Lane_Array[Link_ID][1]->Cell_Number-1);
-			Queue_Length_2_for_Guidance=  Get_Veh_Sum(Link_ID, 2, 0, Lane_Array[Link_ID][2]->Cell_Number-1);    
+			Queue_Length_0_for_Guidance=  Get_Veh_Sum(Link_ID, 0, 0, Link_Array[Link_ID]->Lanes[0]->Cell_Number-1);  
+			Queue_Length_1_for_Guidance=  Get_Veh_Sum(Link_ID, 1, 0, Link_Array[Link_ID]->Lanes[1]->Cell_Number-1);
+			Queue_Length_2_for_Guidance=  Get_Veh_Sum(Link_ID, 2, 0, Link_Array[Link_ID]->Lanes[2]->Cell_Number-1);    
 
 			Queue_Delay_Time_0= Get_Delay_Time(Link_ID, 0);
 			Queue_Delay_Time_1= Get_Delay_Time(Link_ID, 1);

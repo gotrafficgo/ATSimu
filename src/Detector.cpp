@@ -77,7 +77,7 @@ int CDetector::Get_Detector_Location_On_Link(int link_i, int lane_i)
 	if (Detector_Location==DETECTOR_IN_BEGINNING) 
 		Detector_Location_On_Link= Link_Array[link_i]->Limited_Speed; 
 	else
-		Detector_Location_On_Link= Lane_Array[link_i][lane_i]->Cell_Number -1-  Detector_Location; 
+		Detector_Location_On_Link= Link_Array[link_i]->Lanes[lane_i]->Cell_Number -1-  Detector_Location; 
 	
 	return Detector_Location_On_Link;
 

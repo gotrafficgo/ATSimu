@@ -21,7 +21,7 @@ double Speed_From_Gipps(int Veh_Loc, double Veh_Spd, int FrontVeh_Loc, double Fr
 	double B = 3.0;             //the estimated breaking parameter: 3.0m/s^2                 
 	double B0 = 2.8;           //the actual braking parameter: 2.8m/s^2                    
 	double THETA =0.5;       // theta is safety margin parameter, gipps sets theta equals one-half of tao   
-	double S0 = VEHICLE_LENGTH;     //here is 7m       //veh length of the (first) veh : 6.5m
+	double S0 = VEHICLE_LENGTH;   //here it is 7m            //veh length of the (first) veh : 6.5m
 
 	double v=Veh_Spd;
 	double vleader= FrontVeh_Spd;

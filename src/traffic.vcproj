@@ -219,11 +219,23 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath=".\Commuter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Dest.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\DlgCarMovingModels.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DlgDay2day.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Driver.cpp"
 				>
 			</File>
 			<File
@@ -236,6 +248,10 @@
 			</File>
 			<File
 				RelativePath=".\RanDestOrigin.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Traveler.cpp"
 				>
 			</File>
 			<Filter
@@ -802,11 +818,23 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
+				RelativePath=".\Commuter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Dest.h"
 				>
 			</File>
 			<File
 				RelativePath=".\DlgCarMovingModels.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DlgDay2day.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Driver.h"
 				>
 			</File>
 			<File
@@ -819,6 +847,10 @@
 			</File>
 			<File
 				RelativePath=".\RanDestOrigin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Traveler.h"
 				>
 			</File>
 			<Filter

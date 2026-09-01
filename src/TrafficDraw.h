@@ -24,11 +24,14 @@ public:
 	CBrush brush_for_veh_black;
 	CBrush brush_for_veh_green;
 	CBrush brush_for_veh_blue;
+	CBrush brush_for_veh_yellow;
+
 	CPen pen_for_veh_red;
 	CPen pen_for_veh_white;
 	CPen pen_for_veh_black;
 	CPen pen_for_veh_green;
 	CPen pen_for_veh_blue;
+	CPen pen_for_veh_yellow;
 
 	CBrush brush_for_guidance_board;
 	CPen pen_for_guidance_board;

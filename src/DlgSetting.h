@@ -40,4 +40,6 @@ public:
 	afx_msg void OnEnChangeHour();
 	afx_msg void OnBnClickedCheckSliderDemand();
 	BOOL m_Check_Slider_Demand;
+	CButton m_shut_down;
+	afx_msg void OnBnClickedShutDown();
 };

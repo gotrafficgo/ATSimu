@@ -13,9 +13,9 @@ CFixDestOrigin::~CFixDestOrigin(void)
 }
 
 
-Struct_Shortest_Path * CFixDestOrigin::Get_Veh_SPI()
+Struct_Shortest_Path * CFixDestOrigin::Get_Veh_SPI(char Type)  //'T': tsp, 'D': dsp
 {
 	Struct_Shortest_Path *spi;
-	spi= Get_Shortest_Path(Located_Link_ID,End_Link_ID);
+	spi= Get_Shortest_Path('D', Located_Link_ID,End_Link_ID);
 	return spi;
 }

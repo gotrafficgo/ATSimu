@@ -44,6 +44,7 @@ void CDlgSetting::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_SECOND, m_second);
 	DDV_MinMaxInt(pDX, m_second, 0, 59);
 	DDX_Check(pDX, IDC_CHECK_SLIDER_DEMAND, m_Check_Slider_Demand);
+	DDX_Control(pDX, IDC_SHUT_DOWN, m_shut_down);
 }
 
 
@@ -53,6 +54,7 @@ BEGIN_MESSAGE_MAP(CDlgSetting, CDialog)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SIMU_SPEED, &CDlgSetting::OnNMCustomdrawSimuSpeed)
 	ON_EN_CHANGE(IDC_HOUR, &CDlgSetting::OnEnChangeHour)
 	ON_BN_CLICKED(IDC_CHECK_SLIDER_DEMAND, &CDlgSetting::OnBnClickedCheckSliderDemand)
+	ON_BN_CLICKED(IDC_SHUT_DOWN, &CDlgSetting::OnBnClickedShutDown)
 END_MESSAGE_MAP()
 
 
@@ -125,4 +127,10 @@ void CDlgSetting::OnBnClickedCheckSliderDemand()
 	// TODO: Add your control notification handler code here
 	extern bool Slider_Demand_or_Not;
 	Slider_Demand_or_Not = !Slider_Demand_or_Not;	
+}
+
+void CDlgSetting::OnBnClickedShutDown()
+{
+	// TODO: Add your control notification handler code here
+	Shudown_After_Program_End=!Shudown_After_Program_End;
 }

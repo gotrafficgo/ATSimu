@@ -31,7 +31,7 @@ CLane::~CLane()
 }
 
 
-void CLane::Set_Value(Cpoint p1, Cpoint p2) //p1: start point; p2: end point
+int CLane::Set_Value(Cpoint p1, Cpoint p2) //p1: start point; p2: end point
 {
     Cpoint Start_Point, End_Point;	
 	double Lane_Length;
@@ -40,6 +40,8 @@ void CLane::Set_Value(Cpoint p1, Cpoint p2) //p1: start point; p2: end point
 	Lane_Length = Point_Distance(Start_Point, End_Point);
 	Cell_Number = Set_Lane_Cell(Start_Point,End_Point);
 	Prohibit_Change_Lane_Cell_ID = Cell_Number - (int)(PROHIBIT_CHANGE_LANE_DISTANCE / Pixel_Per_Cell);
+
+	return Cell_Number;
 }
 
 //return cell_number

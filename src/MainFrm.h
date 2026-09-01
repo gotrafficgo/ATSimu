@@ -53,6 +53,7 @@ public:
 	bool Show_PlotMFD_Flag;
 	bool Show_PlotTrajectory_Flag;
 	bool Show_Yellow_Intersection_Flag;
+	bool Show_Conflict_Botton_Flag;
 	bool Show_Time_Shortest_Path;
 
 	bool st_PointControlSwitch;
@@ -104,13 +105,16 @@ protected:
 	afx_msg void OnPlotMFD();
 	afx_msg void OnPlotTrajectory();
 	afx_msg void OnStartYellowIntersection();
+	afx_msg void OnStartConflict();
 	afx_msg void OnTimeShortestPath();
 	afx_msg void OnStartSetting();
 	afx_msg void OnStartCarMovingModel();
+	afx_msg void OnStartSetDayToDay();
 	afx_msg void OnDisplayGraph();
 	afx_msg void OnUpdatePlotMFD(CCmdUI* pCmdUI);
 	afx_msg void OnUpdatePlotTrajectory(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateStartYellowIntersection(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConflictBotton(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateTimeShortestPath(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateDisplayGraph(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateSwitchGuidance(CCmdUI* pCmdUI);

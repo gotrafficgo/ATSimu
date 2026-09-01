@@ -9,16 +9,29 @@
 #include "setting.h"
 #include <math.h>
 #include "Dest.h"
+#include "Driver.h"
 
-CVeh::CVeh(int Veh_ID, int Veh_Type, int Start_Cell_ID, int Start_Link_ID, int End_Link_ID, Struct_Shortest_Path* Shortest_Route_Path)
+//CVeh::CVeh(int Veh_ID, int Veh_Type, int Start_Cell_ID, int Start_Link_ID, int End_Link_ID, Struct_Shortest_Path * spi)
+CVeh::CVeh(int Veh_ID, int Veh_Type, int Start_Cell_ID, CDriver * The_Driver)
 {
-	this->Veh_ID=Veh_ID;
-	this->Start_Link_ID= Start_Link_ID;
-	this->End_Link_ID=End_Link_ID;
-
+	this->The_Driver=The_Driver;
+	this->Start_Link_ID= The_Driver->Get_Start_Link_ID();
+	this->End_Link_ID=The_Driver->Get_End_Link_ID();
 	for (int j=0;j<MAX_ROUTE_LENGTH;j++)
-		if (Shortest_Route_Path->Shortest_Path[j]!=-1)
-			Current_Route_Array[j]= Shortest_Route_Path->Shortest_Path[j];
+	{
+		int x=The_Driver->Get_SP_Between_OD()->Shortest_Path[j];
+		if (x!=-1)
+			Current_Route_Array[j]= x;
+	}
+/*
+	this->Start_Link_ID= Start_Link_ID;
+	this->End_Link_ID= End_Link_ID;
+	for (int j=0;j<MAX_ROUTE_LENGTH;j++)
+		if (spi->Shortest_Path[j]!=-1)
+			Current_Route_Array[j]= spi->Shortest_Path[j];
+*/	
+
+	this->Veh_ID=Veh_ID;
 	
 	Current_Link_Index = 0;       									
 	Set_Dest_Lane(Start_Link_ID); 
@@ -58,35 +71,9 @@ CVeh::~CVeh()
 
 void  CVeh::Set_Veh_Color()
 {
-//     set color by random
-// 	int Ran= Get_Random_Number(0,3);
-// 	if (Ran==0)
-// 		return 'R';
-// 	if (Ran==1)
-// 		return 'K';
-// 	if (Ran==2)
-// 		return 'G';
-// 	if (Ran==3)
-// 		return 'B';
-// 
-// 	return 'O';
-
-	//use uniform color
-	//this->Veh_Color='G';
-
-	switch (Veh_Type)
-	{
-	case 0:
-		this->Veh_Color='G';
-		break;
-	case 1:
-		this->Veh_Color='B';
-		break;
-	case 2:
-		this->Veh_Color='K';
-		break;
-	}
+	this->Veh_Color = this->The_Driver->Chosen_Veh_Color();
 }
+
 
 double CVeh::Set_Max_Speed_Percent()
 {
@@ -172,7 +159,7 @@ void CVeh::Set_Dest_Lane()
 
     for(i=0;i<Link_Array[Next_Link]->Lane_Number;i++)
 	{
-		if(Lane_Array[Next_Link][i]->Left_Turn)     //the i th lane, able to left turn
+		if(Link_Array[Next_Link]->Lanes[i]->Left_Turn)     //the i th lane, able to left turn
 		{
 			if(Link_Array[Next_Link]->Next_Left_Link == Next_Next_Link	||Link_Array[Next_Link]->Next_UTurn_Link==Next_Next_Link) 
 			{
@@ -181,7 +168,7 @@ void CVeh::Set_Dest_Lane()
 				a++;
 			}
 		}
-		else if(Lane_Array[Next_Link][i]->Straight_Turn)
+		else if(Link_Array[Next_Link]->Lanes[i]->Straight_Turn)
 		{
 			if(Link_Array[Next_Link]->Next_Straight_Link == Next_Next_Link) 
 			{
@@ -190,7 +177,7 @@ void CVeh::Set_Dest_Lane()
 				b++;
 			}
 		}   
-		else if(Lane_Array[Next_Link][i]->Right_Turn)
+		else if(Link_Array[Next_Link]->Lanes[i]->Right_Turn)
 		{
 			if(Link_Array[Next_Link]->Next_Right_Link == Next_Next_Link) 
 			{
@@ -242,7 +229,7 @@ void CVeh::Set_Dest_Lane(int Link_ID)
 
 	for(i=0;i<Link_Array[Link_ID]->Lane_Number;i++)
 	{
-		if(Lane_Array[Link_ID][i]->Left_Turn)
+		if(Link_Array[Link_ID]->Lanes[i]->Left_Turn)
 		{
 			if(Link_Array[Link_ID]->Next_Left_Link == Next_Link||Link_Array[Link_ID]->Next_UTurn_Link==Next_Link) 
 			{
@@ -250,7 +237,7 @@ void CVeh::Set_Dest_Lane(int Link_ID)
 				j++;
 			}
 		}
-		else if(Lane_Array[Link_ID][i]->Straight_Turn)
+		else if(Link_Array[Link_ID]->Lanes[i]->Straight_Turn)
 		{
 			if(Link_Array[Link_ID]->Next_Straight_Link == Next_Link)
 			{
@@ -258,7 +245,7 @@ void CVeh::Set_Dest_Lane(int Link_ID)
 				j++;
 			}
 		}   
-		else if(Lane_Array[Link_ID][i]->Right_Turn)
+		else if(Link_Array[Link_ID]->Lanes[i]->Right_Turn)
 		{
 			if(Link_Array[Link_ID]->Next_Right_Link == Next_Link)
 			{
@@ -293,21 +280,35 @@ void CVeh::Clear_Dest_Lane_Array()
 }
 
 
-//delete the vehicle in current cell, return this vehicle's pointer
+//delete the vehicle in current cell, return this vehicle's pointer--link
 CVeh * CVeh::Delete_Current_Link_Cell_Veh(int Link_ID,int Lane_ID, int Cell_ID)
 {
 	CVeh *p = NULL;
-	p = Lane_Array[Link_ID][Lane_ID]->Lane_Cell[Cell_ID]->GetVehFromCell();
+	p = Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[Cell_ID]->GetVehFromCell();
 	if(p == NULL)
 	{
 		AfxMessageBox("didn't find the vehicle  \n Delete_Current_Link_Cell_Veh");
 		return 0;
 	}
-	Lane_Array[Link_ID][Lane_ID]->Lane_Cell[Cell_ID]->PutVehInCell(NULL);
+	Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[Cell_ID]->PutVehInCell(NULL);
 
 	return p;	
 }
 
+//delete the vehicle in current cell, return this vehicle's pointer ---intersection
+CVeh * CVeh::Delete_Current_Intersection_Cell_Veh(int Cross_ID,int Cross_Lane_ID, int Cell_ID)
+{
+	CVeh *p = NULL;
+	p = Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[Cell_ID]->GetVehFromCell();
+	if(p == NULL)
+	{
+		AfxMessageBox("didn't find the vehicle  \n Delete_Current_Intersection_Cell_Veh");
+		return 0;
+	}
+	Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[Cell_ID]->PutVehInCell(NULL);
+
+	return p;	
+}
 
 
 //if or not on destination lane
@@ -323,22 +324,23 @@ bool CVeh::Dest_Lane_or_Not(int Lane_ID,int Lane_Number)
 }
 
 
-bool CVeh::Change_Route(int Current_Link_ID, int Next_Link)
+bool CVeh::Change_Route(char Type, int Current_Link_ID, int Next_Link)  //'T'-tsp, 'D'-dsp
 {
 	int i;
 	bool flag=false;
-	Struct_Shortest_Path* Shortest_Route_Path ;
-	Shortest_Route_Path = ShortestPath_with_Guidance(Next_Link);   
-	flag=Last_Route_Link(Shortest_Route_Path);
+	Struct_Shortest_Path* spi ;
+	spi = ShortestPath_with_Guidance(Type, Next_Link);   
+	flag=Last_Route_Link(spi);  //check the destination of this vehicle is consistent with the end of the shortest path, maybe it is not necessary.
 
 	if(flag==true)
 	{
 		for(i=0; i<MAX_ROUTE_LENGTH-i-1; i++)
-			Current_Route_Array[Current_Link_Index+i+1]=Shortest_Route_Path->Shortest_Path[i]; 
+			Current_Route_Array[Current_Link_Index+i+1]=spi->Shortest_Path[i]; 
 		return true;	
 	}
 	return false;
 }
+
 
 bool CVeh::Change_Dest(int Current_Link_ID, int Next_Link)
 {
@@ -353,7 +355,7 @@ bool CVeh::Change_Dest(int Current_Link_ID, int Next_Link)
 	while(iteration_number<100)    //just in case, prevent from dead loop 
 	{
 		iteration_number++;
-		Shortest_Route_Path= Get_Shortest_Path(Next_Link, New_End_Link_ID);
+		Shortest_Route_Path= Get_Shortest_Path('D', Next_Link, New_End_Link_ID);   //dsp
 		flag=Last_Route_Link(Shortest_Route_Path);
 		if(flag==true)
 		{
@@ -411,7 +413,7 @@ void CVeh::Drive_on_Dest_Lane(int Link_ID,  int Lane_ID,  int Cell_ID)
 	double Last_FrontVeh_Spd=0;
 
 	CVeh * Front_pVeh=NULL;
-	Front_pVeh=Get_Front_Veh_on_Link(Link_ID,Lane_ID, Cell_ID, Lane_Array[Link_ID][Lane_ID]->Cell_Number-1);
+	Front_pVeh=Get_Front_Veh_on_Link(Link_ID,Lane_ID, Cell_ID, Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number-1);
 
 	if (Front_pVeh!=NULL)
 	{
@@ -428,9 +430,9 @@ void CVeh::Drive_on_Dest_Lane(int Link_ID,  int Lane_ID,  int Cell_ID)
 		int Dest;
 		Dest= Dest_Lane[0];            //watch traffic light
 
-		if ( Lane_Array[Link_ID][Dest]->Phase!=NULL)
+		if ( Link_Array[Link_ID]->Lanes[Dest]->Phase!=NULL)
 		{
-			LCT = Lane_Array[Link_ID][Dest]->Phase->Get_Phase_LCT();     
+			LCT = Link_Array[Link_ID]->Lanes[Dest]->Phase->Get_Phase_LCT();     
 			Light_Color=LCT.Light_Color;
 		}
 		else 
@@ -438,10 +440,10 @@ void CVeh::Drive_on_Dest_Lane(int Link_ID,  int Lane_ID,  int Cell_ID)
 
 		if(Light_Color == 'R')     //red light
 		{
-			Cur_FrontVeh_Loc= Lane_Array[Link_ID][Lane_ID]->Cell_Number;      //suppose the front veh is at the end of the link, Note the last Cell ID is (Cell_Number-1).
+			Cur_FrontVeh_Loc= Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number;      //suppose the front veh is at the end of the link, Note the last Cell ID is (Cell_Number-1).
 			Cur_FrontVeh_Spd= 0;       
 
-			Last_FrontVeh_Loc=  Lane_Array[Link_ID][Lane_ID]->Cell_Number;      //suppose the front veh is at the end of the link, Note the last Cell ID is (Cell_Number-1).
+			Last_FrontVeh_Loc=  Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number;      //suppose the front veh is at the end of the link, Note the last Cell ID is (Cell_Number-1).
 			Last_FrontVeh_Spd= 0; 
 		}
 		else  //able to access intersection.
@@ -465,8 +467,11 @@ void CVeh::Drive_on_Dest_Lane(int Link_ID,  int Lane_ID,  int Cell_ID)
 		Cur_Speed=0;
 	}
 
-	if(true==Leave_Net_Or_Not(Link_ID, Lane_ID, Cell_ID,  Cur_Location))    //finish the trip: leave the network or arrive destination
+	if(true==Leave_Network_Or_Not(Link_ID, Lane_ID, Cell_ID,  Cur_Location))    //finish the trip: leave the network or arrive destination
+	{
+		Leave_Network_From_Link( Link_ID, Lane_ID, Cell_ID);
 		return;
+	}
 
 	if (true==Able_To_Enter_Cross(Link_ID, Lane_ID, Cell_ID, Cur_Location))
 	{
@@ -492,7 +497,7 @@ int CVeh::Get_Wait_Cell_ID(int Link_ID, int Lane_ID)
 	// 	int THE_ECL;
 	//		THE_ECL =  ENFORCE_CHANGE_LINE + Link_Array[Link_ID]->The_OD->Located_Cell_ID;
 	//		THE_ECL =  ENFORCE_CHANGE_LINE;
-	// 	int Sum_Of_Front_Cell= Lane_Array[Link_ID][0]->Cell_Number - Cell_ID;
+	// 	int Sum_Of_Front_Cell= Link_Array[Link_ID]->Length_In_Cell - Cell_ID;
 	int THE_FCLD;
 	int Wait_Cell_ID;
 	int Line_Amount_Between_Dest;
@@ -504,7 +509,7 @@ int CVeh::Get_Wait_Cell_ID(int Link_ID, int Lane_ID)
 		THE_FCLD = PROHIBIT_CHANGE_LANE_DISTANCE;
 
 	//no veh can pass Wait_Cell_ID
-	Wait_Cell_ID= Lane_Array[Link_ID][Lane_ID]->Cell_Number-1 - THE_FCLD - Line_Amount_Between_Dest;
+	Wait_Cell_ID= Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number-1 - THE_FCLD - Line_Amount_Between_Dest;
 
 	return Wait_Cell_ID;
 }
@@ -518,9 +523,8 @@ void CVeh::Drive_not_on_Dest_Lane(int Link_ID, int Lane_ID, int Cell_ID)
    | No Merging |************|
 	-------------------------------------------
 	*/
-
-	int a= Lane_Array[Link_ID][Lane_ID]->Cell_Number- (PROHIBIT_CHANGE_LANE_DISTANCE/Meter_Per_Cell);
-	int b=  Lane_Array[Link_ID][Lane_ID]->Cell_Number-1- (LONG_TIME_WAIT_REGION / Meter_Per_Cell);
+	int a= Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number- (PROHIBIT_CHANGE_LANE_DISTANCE/Meter_Per_Cell);
+	int b= Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number-1- (LONG_TIME_WAIT_REGION / Meter_Per_Cell);
 	if (Cell_ID>=b&&Cell_ID<a)
 	{
 		if (Cur_Spd==0)
@@ -653,6 +657,8 @@ bool CVeh::Begin_Merge_At_Some_Location(int Link_ID, int Cell_ID)      //vehs be
 		return true;
 }
 
+
+
 int CVeh::Change_Lane(int Link_ID, int Lane_ID, int Cell_ID, int Cur_Location, double Cur_Speed)
 {
 	int Lane_Changed_Or_Not=-1;    //-1 don't want to change lane; 0 wants to change, but no space; 1 succeed
@@ -693,9 +699,9 @@ int CVeh::Change_Lane(int Link_ID, int Lane_ID, int Cell_ID, int Cur_Location, d
 				Veh_Run_on_Link(Link_ID, Lane_ID, Cell_ID, Link_ID, Change_Desitnate_Lane, Cell_ID_After_Proc, Speed_After_Proc);
 				Lane_Changed_Or_Not=1;
 			}
-			else
+			else    //if driver wants to change lane, but there is not enough space, then he decelerate a little (return 0).
 			{
-				this->Cur_Spd= Get_Random_Number(0, (int)Cur_Spd);   //random decelerate if can't 
+				this->Cur_Spd= Get_Random_Number(0, (int)Cur_Spd);   //random decelerate if want to change lane but can't
 				Lane_Changed_Or_Not=0;
 			}
 		}
@@ -709,13 +715,13 @@ int CVeh::Change_Lane(int Link_ID, int Lane_ID, int Cell_ID, int Cur_Location, d
 
 
 
-
+/*
 //make sure there exist 7 meter space to front/back vehicle
 bool CVeh::Have_Space_In_Target_Lane(int Link_ID, int Lane_ID, int Cell_ID)
 {
 	if(Meter_Per_Cell>=VEHICLE_LENGTH)
 	{
-		if (Lane_Array[Link_ID][Lane_ID]->Lane_Cell[Cell_ID]->IsVehInCell()==false)
+		if (Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[Cell_ID]->IsVehInCell()==false)
 			return true;
 		else 
 			return false;
@@ -723,21 +729,20 @@ bool CVeh::Have_Space_In_Target_Lane(int Link_ID, int Lane_ID, int Cell_ID)
 	else 
 	{
 		int Cell_Number_In_Half_Side= VEHICLE_LENGTH;
-
+		
 		//out of boundry
-		if ( (Cell_ID - Cell_Number_In_Half_Side <0)  || (Cell_ID + Cell_Number_In_Half_Side> Lane_Array[Link_ID][Lane_ID]->Cell_Number-1) )
+		if ( (Cell_ID - Cell_Number_In_Half_Side <0)  || (Cell_ID + Cell_Number_In_Half_Side> Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number-1) )
 			return false;
 
 		for (int i=Cell_ID - Cell_Number_In_Half_Side; i<Cell_ID + Cell_Number_In_Half_Side; i++)
 		{	
-			if (Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
+			if (Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
 				return false;
 		}
 		return true;
 	}	
 }
-
-
+*/
 
 int CVeh::Choose_in_Dest_Lanes(int Link_ID, int Lane_ID, int Cell_ID)
 {
@@ -812,14 +817,14 @@ int CVeh::Match_Veh_Number_on_Links( int Line_A, int Line_B, int Link_ID, int Ce
 {
 	int Veh_Sum_on_Line_A=0;
 	int Veh_Sum_on_Line_B=0;
-	int Cell_Sum_on_Line_A= Lane_Array[Link_ID][Line_A]->Cell_Number;
-	int Cell_Sum_on_Line_B= Lane_Array[Link_ID][Line_B]->Cell_Number;
+	int Cell_Sum_on_Line_A= Link_Array[Link_ID]->Lanes[Line_A]->Cell_Number;
+	int Cell_Sum_on_Line_B= Link_Array[Link_ID]->Lanes[Line_B]->Cell_Number;
 
 	for (int i=Cell_Sum_on_Line_A-1; i>=0; i--)
 	{
-		if(Lane_Array[Link_ID][Line_A]->Lane_Cell[i]->GetVehFromCell()!=NULL)
+		if(Link_Array[Link_ID]->Lanes[Line_A]->Lane_Cell[i]->GetVehFromCell()!=NULL)
 			Veh_Sum_on_Line_A++;
-		if(Lane_Array[Link_ID][Line_B]->Lane_Cell[i]->GetVehFromCell()!=NULL)
+		if(Link_Array[Link_ID]->Lanes[Line_B]->Lane_Cell[i]->GetVehFromCell()!=NULL)
 			Veh_Sum_on_Line_B++;
 	}
 
@@ -835,14 +840,14 @@ void CVeh::After_Long_Time_Waiting(int Link_ID,int Lane_ID)
 	int Next_Link_ID=-1;
 
 	//do not consider one lane with two directions
-	if(Lane_Array[Link_ID][Lane_ID]->Left_Turn==1)
+	if(Link_Array[Link_ID]->Lanes[Lane_ID]->Left_Turn==1)
 		Next_Link_ID= Link_Array[Link_ID]->Next_Left_Link;	
-	if (Lane_Array[Link_ID][Lane_ID]->Straight_Turn==1)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Straight_Turn==1)
 		Next_Link_ID= Link_Array[Link_ID]->Next_Straight_Link;	
-	if (Lane_Array[Link_ID][Lane_ID]->Right_Turn==1)
+	if (Link_Array[Link_ID]->Lanes[Lane_ID]->Right_Turn==1)
 		Next_Link_ID= Link_Array[Link_ID]->Next_Right_Link;	
 
-	if(Change_Route(Link_ID, Next_Link_ID))
+	if(Change_Route('D', Link_ID, Next_Link_ID))
 	{
 		Clear_Dest_Lane_Array();
 		Set_Dest_Lane(Link_ID);
@@ -911,39 +916,97 @@ void CVeh::Enter_Cross(int Link_ID, int Lane_ID, int Cell_ID, int Cross_Lane_ID)
 	if (Cross_Lane_Array[Cross_ID][Cross_Lane_ID]!=NULL)
 		if (Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[0]!=NULL)   //there is cells in this lane
 		{
-			if(Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[0]->IsVehInCell()==true) //if there is a vehicle in the beginning of cross lane, then vehicle can be moved to cross lane, so wait in the end of the link lane
+			//if there is a vehicle in the beginning of cross lane, then vehicle cannot be moved to cross lane, so wait in the end of the link lane
+			if(Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[0]->IsVehInCell()==true) 
 			{   
 				Cur_Spd = 0;
 			}
 			else
 			{
-				CVeh *p=NULL;
-				p = Delete_Current_Link_Cell_Veh(Link_ID, Lane_ID, Cell_ID);
+				//commuter type-6 has the ability of changing route on route (see CCommuter)
+				if (this->The_Driver->Able_To_Change_Route_On_Route())
+					this->Change_Route('T', Link_ID, Next_Link_ID);
+				
+				CVeh *p = Delete_Current_Link_Cell_Veh(Link_ID, Lane_ID, Cell_ID);
 				Move_Veh_in_Cross(p,Cross_ID,Cross_Lane_ID, 0);   //move to Cell_ID=0
 				Veh_State = 1;
 			}
 		}
 		else  //there should be a lane, but this lane is too short to generate a cell
 		{
+			//commuter type-6 has the ability of changing route on route  (see CCommuter)
+			if (this->The_Driver->Able_To_Change_Route_On_Route())
+				this->Change_Route('T', Link_ID, Next_Link_ID);
 			Enter_Link(Link_ID, Lane_ID, Cell_ID,Next_Link_ID, Next_Lane_ID);
 		}
 }
 
-bool CVeh::Leave_Net_Or_Not(int Link_ID, int Lane_ID, int Start_Cell_ID,  int End_Cell_ID)
+
+bool CVeh::Leave_Network_Or_Not(int Link_ID, int Lane_ID, int Start_Cell_ID,  int End_Cell_ID)
 {
-	if (Link_ID==End_Link_ID
-		&& Start_Cell_ID < Link_Array[Link_ID]->Dest->Located_Cell_ID
-		&& Link_Array[Link_ID]->Dest->Located_Cell_ID <= End_Cell_ID )
-	{
-		CVeh *p;
-		extern int Out_Veh_Number;
-		p=Delete_Current_Link_Cell_Veh(Link_ID, Lane_ID, Start_Cell_ID);	//pay attention to recording
-		p=NULL;
-		Out_Veh_Number++;
+	if (Link_ID==End_Link_ID && Start_Cell_ID < Link_Array[Link_ID]->Dest->Located_Cell_ID 	&& Link_Array[Link_ID]->Dest->Located_Cell_ID <= End_Cell_ID )
 		return true;
-	}
 	else 
 		return false;
+}
+
+
+void CVeh::Leave_Network_From_Link(int Link_ID, int Lane_ID, int Cell_ID)
+{
+	CVeh *p;
+	extern int Out_Veh_Number;
+	extern int Commuter_Number_On_Network;
+
+	p=Delete_Current_Link_Cell_Veh(Link_ID, Lane_ID, Cell_ID);	//pay attention to recording
+
+	p->The_Driver->Set_After_Arrival(simu_time);
+	p->The_Driver->Record_Travel_Experience_On_Link(simu_time, -1);
+
+	//count number
+	if (p->The_Driver->Get_Driver_Type()=='C')
+	{
+		Commuter_Number_On_Network--;
+		pSampleCollection->One_Arrival('C');
+	}
+	if (p->The_Driver->Get_Driver_Type()=='T')
+	{
+		Traveler_Number_On_Network--;
+		pSampleCollection->One_Arrival('T');
+	}
+	//delete vehicles
+	p=NULL;
+	Out_Veh_Number++;
+}
+
+
+
+void CVeh::Leave_Network_From_Intersection(int Cross_ID, int Cross_Lane_ID, int Cell_ID)
+{
+	CVeh *p;
+	extern int Out_Veh_Number;
+	extern int Commuter_Number_On_Network;
+
+	char Type='i';  //all are irregular
+	p=Delete_Current_Intersection_Cell_Veh(Cross_ID, Cross_Lane_ID, Cell_ID);	//pay attention to recording
+
+	p->The_Driver->Set_After_Arrival(simu_time);
+	p->The_Driver->Record_Travel_Experience_On_Link(simu_time, -1);
+
+	//count number
+	if (p->The_Driver->Get_Driver_Type()=='C')
+	{
+		Commuter_Number_On_Network--;
+		pSampleCollection->One_Arrival('C');
+	}
+	if (p->The_Driver->Get_Driver_Type()=='T')
+	{
+		Traveler_Number_On_Network--;
+		pSampleCollection->One_Arrival('T');
+	}
+
+	//delete vehicles
+	p=NULL;
+	Out_Veh_Number++;
 }
 
 
@@ -961,9 +1024,9 @@ bool CVeh::Able_To_Enter_Cross(int Link_ID, int Lane_ID, int Cell_ID, int Suppos
 	
  	Dest= Dest_Lane[0];            //watch traffic light, take the first lane in the dest lane array as the object
 
-	if(Lane_Array[Link_ID][Dest]->Phase!=NULL)
+	if(Link_Array[Link_ID]->Lanes[Dest]->Phase!=NULL)
 	{
-		LCT = Lane_Array[Link_ID][Dest]->Phase->Get_Phase_LCT();     //watch light---phase
+		LCT = Link_Array[Link_ID]->Lanes[Dest]->Phase->Get_Phase_LCT();     //watch light---phase
 		Light_Color= LCT.Light_Color;
 	}
 	else
@@ -971,7 +1034,7 @@ bool CVeh::Able_To_Enter_Cross(int Link_ID, int Lane_ID, int Cell_ID, int Suppos
 
 	if(Light_Color == 'G')   //Green light
 	{
-		if(Supposed_End_Cell_ID > Lane_Array[Link_ID][Lane_ID]->Cell_Number-1)	//if able to enter crossing
+		if(Supposed_End_Cell_ID > Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number-1)	//if able to enter crossing
 			return true;
 	}
 	return false;
@@ -994,7 +1057,7 @@ bool CVeh::Have_Space_Next_Link(int Front_Cross_ID, int Front_Cross_Lane_ID)
 	Next_Link_ID=Cross_Lane_Array[Front_Cross_ID][Front_Cross_Lane_ID]->End_Link_ID;
 	Next_Lane_ID=Cross_Lane_Array[Front_Cross_ID][Front_Cross_Lane_ID]->End_Lane_ID;
 
-// 	int Total_Number= Lane_Array[Next_Link_ID][Next_Lane_ID]->Cell_Number;
+// 	int Total_Number= Link_Array[Next_Link_ID]->Lanes[Next_Lane_ID]->Cell_Number;
 // 	pVeh=Get_Last_Veh(Next_Link_ID, Next_Lane_ID);
 // 	Cell_Number_To_Last_Veh=Get_Cell_Number_To_Last_Veh(Next_Link_ID, Next_Lane_ID, pVeh);
 
@@ -1003,7 +1066,6 @@ bool CVeh::Have_Space_Next_Link(int Front_Cross_ID, int Front_Cross_Lane_ID)
 		return true;
 	else
 		return false;
-
 
 // 	if (Cell_Number_To_Last_Veh>=ALLOW_ENTER_LINK)
 // 		return true;
@@ -1021,7 +1083,7 @@ int CVeh::Get_Veh_Number_In_Checking_Region(int Link_ID, int Lane_ID, int Region
 
 	for (int i=0; i<Region; i++)
 	{
-		if (true==Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell())
+		if (true==Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell())
 			Veh_Number_In_Checking_Region++;
 	}
 
@@ -1031,7 +1093,7 @@ int CVeh::Get_Veh_Number_In_Checking_Region(int Link_ID, int Lane_ID, int Region
 //Get cell number from the end of the lane to last vehicle,
 // int CVeh::Get_Cell_Number_To_Last_Veh(int Link_ID, int Lane_ID, CVeh* pLastVeh)
 // {
-// 	int Total_Number= Lane_Array[Link_ID][Lane_ID]->Cell_Number;
+// 	int Total_Number= Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number;
 // 	if (pLastVeh==NULL)
 // 		return Total_Number;
 // 	else
@@ -1045,11 +1107,11 @@ int CVeh::Get_Veh_Number_In_Checking_Region(int Link_ID, int Lane_ID, int Region
 // CVeh* CVeh::Get_Last_Veh(int Link_ID, int Lane_ID)
 // {
 // 	CVeh* pVeh=NULL;
-// 	int Total_Number= Lane_Array[Link_ID][Lane_ID]->Cell_Number;
+// 	int Total_Number= Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number;
 // 
 // 	for (int i=0; i<Total_Number; i++)
-// 		if (true==Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell())
-// 			return Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->GetVehFromCell();
+// 		if (true==Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell())
+// 			return Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->GetVehFromCell();
 // 
 // 	return pVeh;
 // }
@@ -1099,7 +1161,7 @@ void CVeh::Update_Loc_And_Spd(CVeh *p, double New_Speed)
 
 
 
-void CVeh::Veh_On_Link(int Cross_id,int Link_ID, int Lane_ID, int Cell_ID)
+void CVeh::Veh_On_Link(int Cross_ID,int Link_ID, int Lane_ID, int Cell_ID)
 {
 	if(Link_ID<0 ||Link_ID>=MAX_LINK_NUMBER)
 	{
@@ -1126,8 +1188,8 @@ CVeh *CVeh::Get_Front_Veh_on_Link(int Link_ID, int Lane_ID, int Cell_ID, int Las
 {
 	int i;
 	for(i=Cell_ID+1;i<=Last_Cell_ID;i++)   
-		  if(Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
-			   return Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->GetVehFromCell();
+		  if(Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell()==true)
+			   return Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->GetVehFromCell();
 
 	return NULL;   
 }
@@ -1137,9 +1199,9 @@ int CVeh::Distance_Between_Front_Veh(int Link_ID, int Lane_ID, int Cell_ID)
 {
 	int i,j;
 	j=0;
-	for(i=Cell_ID+1; i<Lane_Array[Link_ID][Lane_ID]->Cell_Number; i++)
+	for(i=Cell_ID+1; i<Link_Array[Link_ID]->Lanes[Lane_ID]->Cell_Number; i++)
 	{
-		if(Lane_Array[Link_ID][Lane_ID]->Lane_Cell[i]->IsVehInCell()==false)
+		if(Link_Array[Link_ID]->Lanes[Lane_ID]->Lane_Cell[i]->IsVehInCell()==false)
 			j++;
 		else
 			break;
@@ -1156,37 +1218,40 @@ int CVeh::Move_Veh_on_Link(CVeh *p,    int Move_Link_ID,   int Move_Lane_ID,  in
 		AfxMessageBox("Fault, Lane_ID"); 
 		return 0;
 	}
-	if(Lane_Array[Move_Link_ID][Move_Lane_ID]->Lane_Cell[Move_Cell_ID]->IsVehInCell()==true)
+	if(Link_Array[Move_Link_ID]->Lanes[Move_Lane_ID]->Lane_Cell[Move_Cell_ID]->IsVehInCell()==true)
 	{
  		AfxMessageBox("Destination place is occupied");
 		return 0;
 	}
 
-	Lane_Array[Move_Link_ID][Move_Lane_ID]->Lane_Cell[Move_Cell_ID]->PutVehInCell(p);
+	Link_Array[Move_Link_ID]->Lanes[Move_Lane_ID]->Lane_Cell[Move_Cell_ID]->PutVehInCell(p);
 
 /////////////////////////////////////////////////////////////////////////////////
 ///////////cancel the comments, when one wants to collect the trajectory data.
-/*if(simu_time>1000 && simu_time<1200)*/
-	if (Move_Link_ID==45 &&Move_Lane_ID==1 &&p!=NULL)
+	if (Output_Trajectory)
 	{
-		//*************************
-		extern ErrorLog* err;
+	/*if(simu_time>1000 && simu_time<1200)*/
+		if (Move_Link_ID==45 &&Move_Lane_ID==1 &&p!=NULL)
+		{
+			//*************************
+			extern ErrorLog* err;
 
-		//veh id
-		err->LogIntData("trajectory.csv", p->Veh_ID);  
-		err->LogStrData("trajectory.csv", ",");
+			//veh id
+			err->LogIntData("trajectory.csv", p->Veh_ID);  
+			err->LogStrData("trajectory.csv", ",");
 
-		//simu time
-		err->LogIntData("trajectory.csv", simu_time);
-		err->LogStrData("trajectory.csv", ",");
+			//simu time
+			err->LogIntData("trajectory.csv", simu_time);
+			err->LogStrData("trajectory.csv", ",");
 
-		//cell id
-		err->LogIntData("trajectory.csv", Move_Cell_ID);
-				
-		//
-		err->LogStrData("trajectory.csv","\n");
+			//cell id
+			err->LogIntData("trajectory.csv", Move_Cell_ID);
+					
+			//
+			err->LogStrData("trajectory.csv","\n");
 
-		//*************************
+			//*************************
+		}
 	}
 
 	return 1;
@@ -1269,21 +1334,31 @@ void CVeh::Veh_in_Cross(int Cross_ID,  int Cross_Lane_ID,  int Cell_ID)
 		return ;
 	}
 
-	//no conflict in right turn direction
-	if (Cross_Lane_Turn_Direction==2)
+	extern bool conflict_exist_or_not;
+	if (Conflict_Flag==true)
 	{
-		Veh_Run_in_Cross(Cross_ID,Cross_Lane_ID, Cell_ID, Cross_Lane_ID, int(Cell_ID+SPEED_IN_CROSS));	
-		return;
+		//no conflict in right turn direction
+		if (Cross_Lane_Turn_Direction==2)
+		{
+			Veh_Run_in_Cross(Cross_ID,Cross_Lane_ID, Cell_ID, Cross_Lane_ID, int(Cell_ID+SPEED_IN_CROSS));	
+			return;
+		}
+
+		//through-through and through-left turn: conflict
+		bool Left_Enter=Able_To_Pass_Left_Through_Conflict(Cross_Lane_Turn_Direction, Cross_ID, Current_Cell, Prob_Next_Cell);
+ 		bool Straight_Enter=Able_To_Pass_Through_Through_Conflict(Cross_ID, Prob_Next_Cell);
+		
+		if (Left_Enter==true&&Straight_Enter==true)
+			Veh_Run_in_Cross(Cross_ID,Cross_Lane_ID, Cell_ID, Cross_Lane_ID, int(Cell_ID+SPEED_IN_CROSS));		
+		else
+			Cur_Spd=0;
+	}
+	else
+	{
+			Veh_Run_in_Cross(Cross_ID,Cross_Lane_ID, Cell_ID, Cross_Lane_ID, int(Cell_ID+SPEED_IN_CROSS));	
+			return;
 	}
 
-	//through-through and through-left turn
-	bool Left_Enter=Able_To_Pass_Left_Through_Conflict(Cross_Lane_Turn_Direction, Cross_ID, Current_Cell, Prob_Next_Cell);
- 	bool Straight_Enter=Able_To_Pass_Through_Through_Conflict(Cross_ID, Prob_Next_Cell);
-	
-	if (Left_Enter==true&&Straight_Enter==true)
-		Veh_Run_in_Cross(Cross_ID,Cross_Lane_ID, Cell_ID, Cross_Lane_ID, int(Cell_ID+SPEED_IN_CROSS));		
-	else
-		Cur_Spd=0;
 }
 
 
@@ -1340,28 +1415,32 @@ bool CVeh::Able_To_Pass_Through_Through_Conflict(int Cross_ID, CCell *Next_Cell)
 
 }
 
-void CVeh::Enter_Link(int Cross_id,	  int Cell_ID,  int Cross_Lane_ID)
+
+//from intersection to next link
+void CVeh::Enter_Link(int Cross_ID,	  int Cell_ID,  int Cross_Lane_ID)
 {
 	CVeh *p=NULL;
-	int next_link;
-	int next_line;
+	int Next_Link_ID;
+	int Next_Lane_ID;
 
-	next_link = Cross_Lane_Array[Cross_id][Cross_Lane_ID]->End_Link_ID ; 
-	next_line = Cross_Lane_Array[Cross_id][Cross_Lane_ID]->End_Lane_ID ;
-	if (Lane_Array[next_link][next_line]->Lane_Cell[0]->IsVehInCell()==false)
+	Next_Link_ID = Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->End_Link_ID ; 
+	Next_Lane_ID = Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->End_Lane_ID ;
+	if (Link_Array[Next_Link_ID]->Lanes[Next_Lane_ID]->Lane_Cell[0]->IsVehInCell()==false)
 	{
 		//move vehicle to the j th cell in the lane of next link.
-		p = Delete_Current_Cross_Cell_Veh(Cross_id,Cross_Lane_ID, Cell_ID);
-		Move_Veh_on_Link(p,next_link, next_line, 0);
+		p = Delete_Current_Cross_Cell_Veh(Cross_ID,Cross_Lane_ID, Cell_ID);
+		Move_Veh_on_Link(p,Next_Link_ID, Next_Lane_ID, 0);
 		
 		Clear_Dest_Lane_Array();
 		Set_Dest_Lane();
-		Set_On_Link_Max_Speed(next_link);
+		Set_On_Link_Max_Speed(Next_Link_ID);
 
 		Veh_State=0;  //enter link, then change the state into 0
 		Current_Link_Index++;
 		Receive_Guidance=-1;
 		Cur_Spd=((double)CELL_LENGTH_IN_CROSS)/Pixel_Per_Cell;
+
+		this->The_Driver->Record_Travel_Experience_On_Link(simu_time, Next_Link_ID);
 	} 
 	else
 	{
@@ -1373,13 +1452,15 @@ void CVeh::Enter_Link(int Cross_id,	  int Cell_ID,  int Cross_Lane_ID)
 }
 
 
+
+//from this link to next link directly, a special case
 void CVeh::Enter_Link(int Current_Link,  int Current_Lane,   int Current_Cell,  int Next_Link,	  int Next_Lane)
 {
 	CVeh *p=NULL;
 	int Next_Cell;
 	Next_Cell= 0;
 
-	if (Lane_Array[Next_Link][Next_Lane]->Lane_Cell[0]->IsVehInCell()==false)
+	if (Link_Array[Next_Link]->Lanes[Next_Lane]->Lane_Cell[0]->IsVehInCell()==false)
 	{
 		Veh_Run_on_Link(Current_Link, Current_Lane, Current_Cell, Next_Link, Next_Lane, Next_Cell, 1);
 
@@ -1391,6 +1472,9 @@ void CVeh::Enter_Link(int Current_Link,  int Current_Lane,   int Current_Cell,  
 		Current_Link_Index++;
 		Receive_Guidance=-1;
 		Cur_Spd=((double)CELL_LENGTH_IN_CROSS)/Pixel_Per_Cell;    //take the speed in intersection as the initial speed on the link.  speed in intersection is 1 cell of intersection
+
+		this->The_Driver->Record_Travel_Experience_On_Link(simu_time, Next_Link);
+
 	} 
 	else
 	{
@@ -1409,31 +1493,31 @@ void CVeh:: Veh_Run_in_Cross(int Cross_ID,	int Start_Cross_Lane_ID,int Start_Cel
 }
 
 
-CVeh * CVeh::Delete_Current_Cross_Cell_Veh(int Cross_id,int Cross_Lane_ID,int Cell_ID)
+CVeh * CVeh::Delete_Current_Cross_Cell_Veh(int Cross_ID,int Cross_Lane_ID,int Cell_ID)
 {
 	CVeh *p = NULL;
-	p = Cross_Lane_Array[Cross_id][Cross_Lane_ID]->Cross_Lane_Cell[Cell_ID]->GetVehFromCell();
+	p = Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[Cell_ID]->GetVehFromCell();
 	if(p == NULL)
 	{
 		AfxMessageBox("Fault, the one intended to delete does not exist.");
 		return 0;
 	}
-	Cross_Lane_Array[Cross_id][Cross_Lane_ID]->Cross_Lane_Cell[Cell_ID]->PutVehInCell(NULL);
+	Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[Cell_ID]->PutVehInCell(NULL);
 
 	return p;	
 }
 
 
-int CVeh::Move_Veh_in_Cross(CVeh *p, int Cross_id,  int Cross_Lane_ID,  int Move_Cell_ID) 
+int CVeh::Move_Veh_in_Cross(CVeh *p, int Cross_ID,  int Cross_Lane_ID,  int Move_Cell_ID) 
 {
-	if(Cross_Lane_Array[Cross_id][Cross_Lane_ID]->Cross_Lane_Cell[Move_Cell_ID]->IsVehInCell()==true)
+	if(Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[Move_Cell_ID]->IsVehInCell()==true)
 	{
 		AfxMessageBox("Fault, the cell that the vehicle wants to move into is occupied");
 		return 0;
 	}
 
 	Update_Loc_And_Spd(p, SPEED_IN_CROSS);
-	Cross_Lane_Array[Cross_id][Cross_Lane_ID]->Cross_Lane_Cell[Move_Cell_ID]->PutVehInCell(p);
+	Cross_Lane_Array[Cross_ID][Cross_Lane_ID]->Cross_Lane_Cell[Move_Cell_ID]->PutVehInCell(p);
 	return 1;
 }			 
 
@@ -1446,7 +1530,7 @@ int CVeh::Response_to_Guidance(int Link_ID)
 	Guidance_Link= Follow_Guidance_or_Not(Link_ID);
 	if (Guidance_Link >=0 )  
 	{
-		if (Change_Route(Link_ID, Guidance_Link))
+		if (Change_Route('D', Link_ID, Guidance_Link))
 		{
 			Clear_Dest_Lane_Array();
 			Set_Dest_Lane(Link_ID);
@@ -1715,10 +1799,11 @@ int CVeh::Get_Turn_Direction(int Current_Link_ID, int Next_Link_ID)
 
 
 //////////////////////////////////////////////
-Struct_Shortest_Path* CVeh::ShortestPath_with_Guidance(int Next_Link)
+//used when vehicle need to change route
+Struct_Shortest_Path* CVeh::ShortestPath_with_Guidance(char Type, int Next_Link)
 {
 	//choose a new shortest path
-	Struct_Shortest_Path *spi= Get_Shortest_Path(Next_Link,End_Link_ID);
+	Struct_Shortest_Path *spi= Get_Shortest_Path(Type, Next_Link,End_Link_ID);
 
 	int Link_ID=-1;
 	int End_Of_Route=100000000;
