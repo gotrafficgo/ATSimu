@@ -30,7 +30,7 @@ The latest source snapshot is the day-to-day version released on May 18, 2011. I
 
 - [YouTube](https://youtu.be/xm81spwfknk)
 - [Bilibili](https://www.bilibili.com/video/BV14M4y1j7M7?t=1.8)
-- [Project page](https://www.gotrafficgo.com/project/microscopic-traffic-simulation/)
+- [Project page](https://www.gotrafficgo.com/project/animation-microscopic-simulation/)
 
 ## Repository layout
 
