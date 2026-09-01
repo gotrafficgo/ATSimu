@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use ATSimu in your work, please cite it as software."
+title: "ATSimu: A Network-Scale Microscopic Traffic Simulator"
+type: software
+authors:
+  - family-names: He
+    given-names: Zhengbing
+version: "2011.05.18"
+date-released: 2011-05-18
+url: "https://github.com/gotrafficgo/ATSimu"
+repository-code: "https://github.com/gotrafficgo/ATSimu"
+license: MIT
+keywords:
+  - microscopic traffic simulation
+  - traffic flow
+  - transportation
+  - day-to-day dynamics

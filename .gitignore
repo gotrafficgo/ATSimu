@@ -1,0 +1,20 @@
+# Visual Studio build products and user state
+.vs/
+Debug/
+Release/
+*.aps
+*.db
+*.idb
+*.ilk
+*.ipch
+*.ncb
+*.obj
+*.pch
+*.pdb
+*.sdf
+*.suo
+*.user
+*.VC.db
+
+# Windows Explorer cache
+Thumbs.db
